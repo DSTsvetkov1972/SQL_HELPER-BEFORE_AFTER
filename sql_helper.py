@@ -2,10 +2,10 @@ import pyperclip
 from colorama import Fore
    
 #source = input('Введите список полей: ')#"order_id,container_number,`SVOD.Номер контейнера`,points_from_catakog_name,points_to_catalog_namer,station_name_from,station_name_to,date_end,amount_in_rub_without_vat,amount_in_contract_currency_without_vat"
-source  = "`Date_pop`,EsrOper,`DS.country_code`"
+source  = "Date_E,container_number,service_details_points_from_catalog_name,service_details_points_to_catalog_name,service_details_points_from_station_name,service_details_points_to_station_name,amount_in_rub_without_vat,amount_in_contract_currency_without_vat,amount_in_rub_with_vat,amount_in_contract_currency_with_vat"
 
-argument_left  = "`Date_pop`".replace('`','')
-argument_right = "``SVOD.Дата документа``".replace('`','')
+argument_right  = "`datetime_move_started`".replace('`','')
+argument_left = "Date_E".replace('`','')
 
 fields_list = source.replace("`","").split(",")
 
