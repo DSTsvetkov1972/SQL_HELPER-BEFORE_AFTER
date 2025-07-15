@@ -5,21 +5,21 @@ CREATE OR REPLACE TABLE audit.rks_cont
 -- SELECT * FROM audit.rks_eq
 CREATE OR REPLACE TABLE audit.rks_eq
 {% endif %}
-
 ENGINE = MergeTree()
 ORDER BY container_number
 AS (
 
 WITH 
 SVOD AS (
-	SELECT DISTINCT {{ container_field }} FROM {{ svod_table_name }} WHERE {{ container_field }} <>''
+	SELECT DISTINCT `{{ container_field }}` FROM {{ svod_table_name }} WHERE `{{ container_field }}` <>''
+--) SELECT * FROM SVOD    
 ),
 RKS AS (
 SELECT
     {% include 'block_select_fields.sql' -%} 
 FROM 
 	(SELECT DISTINCT * FROM rks__directly WHERE client_number_id <> '0009309810') AS RD
-	INNER JOIN SVOD ON container_number = {{ container_field }}
+	INNER JOIN SVOD ON container_number = `{{ container_field }}`
 WHERE
     {% include 'block_where.sql' %}
     esu_id IN ('{{"', '".join(esu_ids)}}')
@@ -34,7 +34,10 @@ HAVING
 --) SELECT * FROM RKS 
 )
 SELECT
-	min(Date_E) AS min_Date_E,service_details_order_id,container_number,client_name,service_provision_place_filial_name,service_details_points_from_catalog_name,service_details_points_to_catalog_name,
+	min(Date_E) AS `min_Date_E`,`service_details_order_id`,`container_number`,
+    {% for rks_field in rks_fields %}
+    `{{ rks_field }}`,
+    {% endfor %}
     {% for esu_id in esu_ids %}
     sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
     sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,

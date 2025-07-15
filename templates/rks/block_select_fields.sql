@@ -1,10 +1,10 @@
     min(date_end) AS Date_E,
     service_details_order_id,
-    {% if container_by_container_number %}
+{% if container_by_container_number %}
     replace(replace(replace(replace(replace(replace(replace(upperUTF8(service_details_container_number),' ',''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C') AS `container_number`,
-    {% else %}
+{% else %}
     equipment_number AS `container_number`,
-    {% endif %}
+{% endif %}
     esu_id,
     ----------------------------------------------------------------------------------------------------------------------------------------------
 {% for rks_field in rks_fields %}

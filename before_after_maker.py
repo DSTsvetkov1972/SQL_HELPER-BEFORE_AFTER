@@ -1,5 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 import os
+import re
 import pyperclip
 from conditions import conditions
 
@@ -8,7 +9,12 @@ from conditions import conditions
 
 loader = FileSystemLoader('templates/rks')
 env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
-template = env.get_template('rks.sql')
 
-pyperclip.copy(template.render(conditions, container_by_container_number=False))
-
+pyperclip.copy(
+    #f"{env.get_template('rks_cont_eq.sql').render(conditions, container_by_container_number=True)}"
+    #f"\n\n"
+    #f"\n\n"
+    #f"{env.get_template('rks_cont_eq.sql').render(conditions, container_by_container_number=False)}"
+    #f"\n\n"
+    #f"\n\n"
+    f"{env.get_template('rks_answer.sql').render(conditions)}")
