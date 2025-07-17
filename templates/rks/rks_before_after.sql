@@ -1,9 +1,9 @@
 {% if container_by_container_number %}
--- SELECT * FROM audit.rks_cont_before_after
-CREATE OR REPLACE TABLE audit.rks_cont_before_after
+-- SELECT * FROM audit.rks_before_after_cont
+CREATE OR REPLACE TABLE audit.rks_before_after_cont
 {% else %}
--- SELECT * FROM audit.rks_eq_before_after
-CREATE OR REPLACE TABLE audit.rks_eq_before_after
+-- SELECT * FROM audit.rks_before_after_eq
+CREATE OR REPLACE TABLE audit.rks_before_after_eq
 {% endif %}
 ENGINE = MergeTree()
 ORDER BY `{{ container_field }}`
@@ -25,6 +25,8 @@ SELECT
 {% for esu_id in esu_ids %}
     argMaxIf(`{{ esu_id }}_amount_in_rub_with_vat`, min_Date_E, min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_rub_with_vat`,
     argMaxIf(`{{ esu_id }}_amount_in_rub_without_vat`, min_Date_E, min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_rub_without_vat`,
+    argMaxIf(`{{ esu_id }}_amount_in_contract_currency_with_vat`, min_Date_E, min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_contract_currency_with_vat`,
+    argMaxIf(`{{ esu_id }}_amount_in_contract_currency_without_vat`, min_Date_E, min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_contract_currency_without_vat`,	
 {% endfor %}
 	------------------------------------------------------------------------------------------------
 	IF(`A_service_details_order_id`='', NULL, date_diff(DAY, SVOD.`{{ date_field }}`, `A_min_Date_E`)) AS `A_date_diff`,
@@ -36,6 +38,8 @@ SELECT
 {% for esu_id in esu_ids %}
     argMinIf(`{{ esu_id }}_amount_in_rub_with_vat`, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ esu_id }}_amount_in_rub_with_vat`,
     argMinIf(`{{ esu_id }}_amount_in_rub_without_vat`, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ esu_id }}_amount_in_rub_without_vat`,
+    argMinIf(`{{ esu_id }}_amount_in_contract_currency_with_vat`, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ esu_id }}_amount_in_contract_currency_with_vat`,
+    argMinIf(`{{ esu_id }}_amount_in_contract_currency_without_vat`, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ esu_id }}_amount_in_contract_currency_without_vat`,	
 {% endfor %}
 	------------------------------------------------------------------------------------------------	
 	SVOD.`{{ container_field }}`, SVOD.`{{ date_field }}`
