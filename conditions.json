@@ -1,5 +1,6 @@
 {
-    
+"user": "cvetkov_d",
+
 "svod_table_name": "audit.avoperevozki_soispolniteli_iz_rks",
 
 "container_field": "SHAPKA.№ контейнера_cleaned",
@@ -47,8 +48,8 @@
 ],
         
 "where_conditions": [
-    "service_provision_place_filial_name='НКП МСК' AND",
-    "date_end >= '2023-01-01' AND"
+    "date_end >= '2023-01-01'",
+    "service_provision_place_filial_name='НКП МСК'"
 ]
 
 }

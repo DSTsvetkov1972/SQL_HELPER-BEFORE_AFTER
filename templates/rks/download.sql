@@ -4,10 +4,10 @@ SVOD AS (
 SELECT * FROM audit.avoperevozki_soispolniteli_iz_rks
 ),
 RKS AS (
-SELECT * FROM audit.rks
+SELECT * FROM audit.{{ user }}_rks
 ),
 BEFORE_AFTER AS (
-SELECT * FROM audit.rks_before_after
+SELECT * FROM audit.{{ user }}_rks_before_after
 ),
 ANSWER AS (
 SELECT

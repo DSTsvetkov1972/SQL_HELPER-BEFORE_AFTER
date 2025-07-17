@@ -1,10 +1,10 @@
 {% macro rks(container_by_container_number) %}
 {% if container_by_container_number %}
--- SELECT * FROM audit.rks_cont
-CREATE OR REPLACE TABLE audit.rks_cont
+-- SELECT * FROM audit.{{ user }}_rks_cont
+CREATE OR REPLACE TABLE audit.{{ user }}_rks_cont
 {% else %}
--- SELECT * FROM audit.rks_eq
-CREATE OR REPLACE TABLE audit.rks_eq
+-- SELECT * FROM audit.{{ user }}_rks_eq
+CREATE OR REPLACE TABLE audit.{{ user }}_rks_eq
 {% endif %}
 ENGINE = MergeTree()
 ORDER BY container_number

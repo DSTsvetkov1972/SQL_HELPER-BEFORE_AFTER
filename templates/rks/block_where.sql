@@ -1,3 +1,3 @@
 {% for where_condition in where_conditions %}
-    {{ where_condition }}
+    {{ where_condition }} AND
 {% endfor %}

@@ -1,10 +1,10 @@
 {% macro rks_before_after(container_by_container_number) %}
 {% if container_by_container_number %}
--- SELECT * FROM audit.rks_before_after_cont
-CREATE OR REPLACE TABLE audit.rks_before_after_cont
+-- SELECT * FROM audit.{{ user }}_rks_before_after_cont
+CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_cont
 {% else %}
--- SELECT * FROM audit.rks_before_after_eq
-CREATE OR REPLACE TABLE audit.rks_before_after_eq
+-- SELECT * FROM audit.{{ user }}_rks_before_after_eq
+CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_eq
 {% endif %}
 ENGINE = MergeTree()
 ORDER BY `{{ container_field }}`
@@ -46,9 +46,9 @@ SELECT
 	SVOD.`{{ container_field }}`, SVOD.`{{ date_field }}`
 FROM 
     {% if container_by_container_number %}
-	(SELECT * FROM audit.rks_cont) AS RKS
+	(SELECT * FROM audit.{{ user }}_rks_cont) AS RKS
     {% else %}
-	(SELECT * FROM audit.rks_eq) AS RKS    
+	(SELECT * FROM audit.{{ user }}_rks_eq) AS RKS    
     {% endif %}
 	RIGHT JOIN SVOD ON SVOD.`{{ container_field }}` = RKS.`container_number`
 GROUP BY

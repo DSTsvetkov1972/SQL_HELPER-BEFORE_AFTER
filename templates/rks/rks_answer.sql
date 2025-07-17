@@ -1,5 +1,5 @@
--- SELECT * FROM audit.rks
-CREATE OR REPLACE TABLE audit.rks
+-- SELECT * FROM audit.{{ user }}_rks
+CREATE OR REPLACE TABLE audit.{{ user }}_rks
 ENGINE = MergeTree()
 ORDER BY `SVOD.{{ container_field }}`
 AS (
@@ -16,8 +16,8 @@ SELECT
 	RKS_EQ.*
 FROM
 	SVOD
-	LEFT JOIN audit.rks_cont AS RKS_CONT ON SVOD.`{{ container_field }}`=RKS_CONT.container_number AND SVOD.`{{ order_id_field }}`=RKS_CONT.service_details_order_id
-	LEFT JOIN audit.rks_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.container_number AND SVOD.`{{ order_id_field }}`=RKS_EQ.service_details_order_id	
+	LEFT JOIN audit.{{ user }}_rks_cont AS RKS_CONT ON SVOD.`{{ container_field }}`=RKS_CONT.container_number AND SVOD.`{{ order_id_field }}`=RKS_CONT.service_details_order_id
+	LEFT JOIN audit.{{ user }}_rks_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.container_number AND SVOD.`{{ order_id_field }}`=RKS_EQ.service_details_order_id	
 --) SELECT * FROM RKS
 )
 SELECT

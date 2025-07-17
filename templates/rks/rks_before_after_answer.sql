@@ -1,5 +1,5 @@
--- SELECT * FROM audit.rks_before_after
-CREATE OR REPLACE TABLE audit.rks_before_after
+-- SELECT * FROM audit.{{ user }}_rks_before_after
+CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after
 ENGINE = MergeTree()
 ORDER BY `SVOD.{{ container_field }}`
 AS (
@@ -16,8 +16,8 @@ SELECT
 	RKS_EQ.*
 FROM
 	SVOD
-	LEFT JOIN audit.rks_before_after_cont AS RKS_CONT ON SVOD.`{{ container_field }}`=RKS_CONT.`{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_CONT.`SVOD.{{ date_field }}`
-	LEFT JOIN audit.rks_before_after_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.`{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_EQ.`SVOD.{{ date_field }}`
+	LEFT JOIN audit.{{ user }}_rks_before_after_cont AS RKS_CONT ON SVOD.`{{ container_field }}`=RKS_CONT.`{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_CONT.`SVOD.{{ date_field }}`
+	LEFT JOIN audit.{{ user }}_rks_before_after_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.`{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_EQ.`SVOD.{{ date_field }}`
 --) SELECT * FROM RKS
 )
 SELECT

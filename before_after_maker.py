@@ -20,5 +20,6 @@ while True:
         f"{env.get_template('main.sql').render(conditions)}"
     )
 
-    print(Fore.GREEN, "SQL скопирован в буфер обмена!", Fore.RESET)
-    input('Измените параметры conditions.json и нажмите ввод')
+    print(Fore.GREEN + "SQL скопирован в буфер обмена!" + Fore.RED)
+    input('Чтобы сгенерировать новый запрос, измените параметры conditions.json и нажмите ввод')
+    print(Fore.RESET)
