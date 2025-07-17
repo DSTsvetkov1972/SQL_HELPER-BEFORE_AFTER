@@ -1,4 +1,4 @@
-    {% for rks_field in rks_fields %}
+    {% for rks_field in rks_fields if  "--" not in rks_field %}
     {% if rks_field == 'document_reasons_number_cleaned' %}
     `document_reasons_number_striped`,
     `document_reasons_number_letters`,

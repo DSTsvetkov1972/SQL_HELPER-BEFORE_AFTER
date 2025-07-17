@@ -31,7 +31,7 @@ SELECT
         `RKS_CONT.service_details_order_id`<>'', `RKS_CONT.min_Date_E`,
         NULL
     ) AS `min_Date_E`,
-{% for rks_field in rks_fields %}
+{% for rks_field in rks_fields if  "--" not in rks_field %}
 	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ rks_field }}`, `RKS_CONT.{{ rks_field}}`) AS `{{ rks_field }}`,
 {% endfor -%}   
 {% for esu_id in esu_ids %}
@@ -46,3 +46,5 @@ FROM
 	RKS
 
 )
+{# #}
+

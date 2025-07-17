@@ -1,3 +1,4 @@
+{% macro rks(container_by_container_number) %}
 {% if container_by_container_number %}
 -- SELECT * FROM audit.rks_cont
 CREATE OR REPLACE TABLE audit.rks_cont
@@ -35,7 +36,7 @@ HAVING
 )
 SELECT
 	min(Date_E) AS `min_Date_E`,`service_details_order_id`,`container_number`,
-    {% for rks_field in rks_fields %}
+    {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}
     {% for esu_id in esu_ids %}
@@ -49,5 +50,11 @@ FROM
 GROUP BY	
 	{% include 'block_group_by.sql' %}
 
-	
 )
+{% endmacro %}
+{{ rks(container_by_container_number=True) }}
+{# #}
+
+{{ rks(container_by_container_number=False) }}
+{# #}
+

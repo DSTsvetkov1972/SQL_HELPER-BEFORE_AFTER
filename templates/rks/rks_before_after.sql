@@ -1,3 +1,4 @@
+{% macro rks_before_after(container_by_container_number) %}
 {% if container_by_container_number %}
 -- SELECT * FROM audit.rks_before_after_cont
 CREATE OR REPLACE TABLE audit.rks_before_after_cont
@@ -19,7 +20,7 @@ SELECT
 	IF(`B_service_details_order_id`='', NULL, date_diff(DAY, SVOD.`{{ date_field }}`, `B_min_Date_E`)) AS `B_date_diff`,
 	IF(`B_service_details_order_id`='', NULL, argMaxIf(min_Date_E, min_Date_E, min_Date_E<=SVOD.`{{ date_field }}`)) AS `B_min_Date_E`,
 	argMaxIf(`service_details_order_id`, min_Date_E, min_Date_E<=SVOD.`{{ date_field }}`) AS `B_service_details_order_id`,
-{% for rks_field in rks_fields %}
+{% for rks_field in rks_fields if  "--" not in rks_field %}
     argMaxIf(`{{ rks_field }}`, 'min_Date_E', min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ rks_field }}`,
 {% endfor %}
 {% for esu_id in esu_ids %}
@@ -32,7 +33,7 @@ SELECT
 	IF(`A_service_details_order_id`='', NULL, date_diff(DAY, SVOD.`{{ date_field }}`, `A_min_Date_E`)) AS `A_date_diff`,
 	IF(`A_service_details_order_id`='', NULL, argMaxIf(min_Date_E, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`)) AS `A_min_Date_E`,
 	argMinIf(`service_details_order_id`, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`) AS `A_service_details_order_id`,
-{% for rks_field in rks_fields %}
+{% for rks_field in rks_fields if  "--" not in rks_field %}
     argMinIf(`{{ rks_field }}`, 'min_Date_E', min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ rks_field }}`,
 {% endfor %}
 {% for esu_id in esu_ids %}
@@ -55,3 +56,9 @@ GROUP BY
 ) SELECT * FROM RKS_BEFORE_AFTER
 
 )
+{% endmacro %}
+{{ rks_before_after(container_by_container_number=True) }}
+{# #}
+{{ rks_before_after(container_by_container_number=False) }}
+{# #}
+
