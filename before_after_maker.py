@@ -11,9 +11,7 @@ while True:
         pprint(conditions)
         print(Fore.RESET)
 
-
-
-    loader = FileSystemLoader('templates/rks')
+    loader = FileSystemLoader('templates')
     env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
 
     pyperclip.copy(
