@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.avoperevozki_soispolniteli_iz_rks",
+"svod_table_name": "audit.svod",
 
-"container_field": "SHAPKA.№ контейнера_cleaned",
+"container_field": "`SHAPKA.№ контейнера`",
     
-"order_id_field": "SHAPKA.№ заказа",
+"order_id_field": "`SHAPKA.№ заказа`",
     
-"date_field": "Дата для анализа",
+"date_field": "middle_date",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
@@ -17,15 +17,13 @@
 "rks_fields": [
     "--document_reasons_number_cleaned",
 
-    "service_provision_place_filial_name",
-    
     "--provider_name",
     "--service_details_wagon_number",
     
     "client_name",
     
     "--contract_number",
-    "--service_provision_place_filial_name",
+    "service_provision_place_filial_name",
     "--service_provision_place_location_name",
     "--service_details_points_from_catalog_id",
     "--service_details_points_to_catalog_id",
@@ -36,8 +34,8 @@
     "--service_details_points_from_station_id",
     "--service_details_points_to_station_id",
     
-    "service_details_points_from_station_name",
-    "service_details_points_to_station_name",
+    "--service_details_points_from_station_name",
+    "--service_details_points_to_station_name",
     
     "--epu_id"
 ],
@@ -49,7 +47,7 @@
         
 "where_conditions": [
     "date_end >= '2023-01-01'",
-    "service_provision_place_filial_name='НКП МСК'"
+    "service_provision_place_filial_name LIKE '%МСК%' "
 ]
 
 }

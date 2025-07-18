@@ -7,7 +7,7 @@ CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_cont
 CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_eq
 {% endif %}
 ENGINE = MergeTree()
-ORDER BY `{{ container_field }}`
+ORDER BY `SVOD.{{ container_field }}`
 AS (
 
 WITH 
@@ -43,7 +43,7 @@ SELECT
     argMinIf(`{{ esu_id }}_amount_in_contract_currency_without_vat`, min_Date_E, min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ esu_id }}_amount_in_contract_currency_without_vat`,	
 {% endfor %}
 	------------------------------------------------------------------------------------------------	
-	SVOD.`{{ container_field }}`, SVOD.`{{ date_field }}`
+	SVOD.`{{ container_field }}` AS `SVOD.{{ container_field }}`, SVOD.`{{ date_field }}` AS `SVOD.{{ date_field }}`
 FROM 
     {% if container_by_container_number %}
 	(SELECT * FROM audit.{{ user }}_rks_cont) AS RKS

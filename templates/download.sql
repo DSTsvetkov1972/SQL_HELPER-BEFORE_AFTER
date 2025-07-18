@@ -1,7 +1,7 @@
 --download
 WITH
 SVOD AS (
-SELECT * FROM audit.avoperevozki_soispolniteli_iz_rks
+SELECT * FROM {{ svod_table_name }}
 ),
 RKS AS (
 SELECT * FROM audit.{{ user }}_rks
@@ -29,10 +29,20 @@ SELECT
 {%- else %}
     '<==SVOD BA==>',
 {%- endif %}    
+FROM
+	SVOD
+{%- if order_id_field %}    
+	LEFT JOIN RKS ON SVOD.`{{ container_field }}` = RKS.`SVOD.{{ container_field }}` AND SVOD.`{{ order_id_field }}` = RKS.`SVOD.{{ order_id_field }}`
+{% endif %}
+--) SELECT * FROM ANSWER
+),
+ANSWER AS (
+SELECT
+	ANSWER.*,
     BEFORE_AFTER.`B_подтянуто по`, BEFORE_AFTER.`B_date_diff`, BEFORE_AFTER.`B_min_Date_E`,
 {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`B_{{ rks_field }}`,
-{% endfor -%}
+{% endfor -%}	
 {% for esu_id in esu_ids %}
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_without_vat`,
@@ -52,10 +62,7 @@ SELECT
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_without_vat`,
 {% endfor -%}  
 FROM
-	SVOD
-{%- if order_id_field %}    
-	LEFT JOIN RKS ON SVOD.`{{ container_field }}` = RKS.`SVOD.{{ container_field }}` AND SVOD.`{{ order_id_field }}` = RKS.`SVOD.{{ order_id_field }}`
-{% endif %}
-	LEFT JOIN BEFORE_AFTER ON SVOD.`{{ container_field }}` = BEFORE_AFTER.`SVOD.{{ container_field }}` AND SVOD.`{{ date_field }}` = BEFORE_AFTER.`SVOD.{{ date_field }}`
+	ANSWER
+	LEFT JOIN BEFORE_AFTER ON ANSWER.`{{ container_field }}` = BEFORE_AFTER.`SVOD.{{ container_field }}` AND ANSWER.`{{ date_field }}` = BEFORE_AFTER.`SVOD.{{ date_field }}`
 )
 SELECT * FROM ANSWER
