@@ -22,7 +22,9 @@ FROM
 	(SELECT DISTINCT * FROM rks__directly WHERE client_number_id <> '0009309810') AS RD
 	INNER JOIN SVOD ON container_number = `{{ container_field }}`
 WHERE
-    {% include 'block_where.sql' %}
+{% for where_condition in where_conditions %}
+    {{ where_condition }} AND
+{% endfor %}
     esu_id IN ('{{"', '".join(esu_ids)}}')
 GROUP BY
     {% include 'block_group_by.sql' %},
