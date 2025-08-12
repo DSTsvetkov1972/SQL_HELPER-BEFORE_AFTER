@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod",
+"svod_table_name": "audit.cvetkov_d_LOADED_avtosoispolniteli_msk__2025_07_14_10_38_23__22206h53_xlsx_obrabotka__2_",
 
-"container_field": "`SHAPKA.№ контейнера`",
+"container_field": "`Контейнер`",
     
-"order_id_field": "`SHAPKA.№ заказа`",
+"order_id_field": "`Заказ`",
     
-"date_field": "middle_date",
+"date_field": "`Дата для анализа`",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
