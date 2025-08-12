@@ -17,7 +17,7 @@ SVOD AS (
 ),
 RKS AS (
 SELECT
-    {% include 'block_select_fields.sql' -%} 
+    {% include 'block_select_fields.sql' %} 
 FROM 
 	(SELECT DISTINCT * FROM history.rks__directly WHERE client_number_id <> '0009309810' AND is_deleted=False) AS RD
 	INNER JOIN SVOD ON container_number = SVOD.`{{ container_field }}`
