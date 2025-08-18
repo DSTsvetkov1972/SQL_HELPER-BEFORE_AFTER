@@ -5,9 +5,11 @@
 {% else %}
     equipment_number AS `container_number`,
 {% endif %}
+{% if 'esu_id' not in rks_fields and esu_id_columns %}
     esu_id,
+{% endif %}
     ----------------------------------------------------------------------------------------------------------------------------------------------
-{% for rks_field in rks_fields if  "--" not in rks_field and rks_field != 'esu_id' %}
+{% for rks_field in rks_fields if  "--" not in rks_field %}
 {% if rks_field == 'document_reasons_number_cleaned' %}
     replace(`document_reasons_number`, ' ', '') AS `document_reasons_number_striped`,
     multiIf(

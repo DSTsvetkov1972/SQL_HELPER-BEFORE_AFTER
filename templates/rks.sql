@@ -23,18 +23,17 @@ FROM
 	INNER JOIN SVOD ON container_number = SVOD.`{{ container_field }}`
 WHERE
 {% for where_condition in where_conditions %}
-{%- if not loop.last or esu_ids%}
+{%- if not loop.last or esu_id_columns%}
     {{ where_condition }} AND
 {% else %}
     {{ where_condition }}
 {% endif %}
 {% endfor %}
-{% if esu_ids %}
-    esu_id IN ('{{ "', '".join(esu_ids) }}')
+{% if esu_id_columns %}
+    esu_id IN ('{{ "', '".join(esu_id_columns) }}')
 {% endif %}
 GROUP BY
-    {% include 'block_group_by.sql' %},
-    esu_id
+    {% include 'block_group_by.sql' %}
 HAVING
 	(amount_in_rub_without_vat<>0 OR 
 	amount_in_contract_currency_without_vat<>0 OR
@@ -47,8 +46,8 @@ SELECT
 {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
 {% endfor %}
-{% if esu_ids %}
-{% for esu_id in esu_ids %}
+{% if esu_id_columns %}
+{% for esu_id in esu_id_columns %}
     sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
     sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
     sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`,    

@@ -18,7 +18,7 @@ SELECT
 {% for rks_field in rks_fields if  "--" not in rks_field %}
     RKS.{{ rks_field }},
 {% endfor -%}
-{% for esu_id in esu_ids %}
+{% for esu_id in esu_id_columns %}
 	RKS.`{{ esu_id }}_amount_in_rub_with_vat`,
 	RKS.`{{ esu_id }}_amount_in_rub_without_vat`,
 	RKS.`{{ esu_id }}_amount_in_contract_currency_with_vat`,
@@ -39,11 +39,11 @@ FROM
 ANSWER AS (
 SELECT
 	ANSWER.*,
-    BEFORE_AFTER.`B_подтянуто по`, BEFORE_AFTER.`B_date_diff`, BEFORE_AFTER.`B_min_Date_E`,
+    BEFORE_AFTER.`B_подтянуто по`, BEFORE_AFTER.`B_date_diff`, BEFORE_AFTER.`B_min_Date_E`, BEFORE_AFTER. `B_service_details_order_id`,
 {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`B_{{ rks_field }}`,
 {% endfor -%}	
-{% for esu_id in esu_ids %}
+{% for esu_id in esu_id_columns %}
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_contract_currency_with_vat`,
@@ -51,11 +51,11 @@ SELECT
 {% endfor -%}
 {# #}
 	'<==B A==>',
-    BEFORE_AFTER.`A_подтянуто по`, BEFORE_AFTER.`A_date_diff`, BEFORE_AFTER.`A_min_Date_E`,
+    BEFORE_AFTER.`A_подтянуто по`, BEFORE_AFTER.`A_date_diff`, BEFORE_AFTER.`A_min_Date_E`, BEFORE_AFTER. `A_service_details_order_id`,
 {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`A_{{ rks_field }}`,
 {% endfor -%}
-{% for esu_id in esu_ids %}
+{% for esu_id in esu_id_columns %}
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_with_vat`,

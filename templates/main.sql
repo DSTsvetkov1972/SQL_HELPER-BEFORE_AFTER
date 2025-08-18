@@ -1,4 +1,5 @@
 SELECT * FROM {{ svod_table_name }}
+{# #}
 
 {% include 'rks.sql' %}
 {# #}

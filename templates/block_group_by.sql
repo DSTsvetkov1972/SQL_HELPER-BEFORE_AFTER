@@ -8,5 +8,9 @@
     `{{ rks_field }}`,
     {% endif %}
     {% endfor %}
+    {% if esu_id_columns %}
+    `esu_id`,
+    {% endif %}
     `service_details_order_id`,
     `container_number`
+

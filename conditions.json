@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.cvetkov_d_LOADED_avtosoispolniteli_msk__2025_07_14_10_38_23__22206h53_xlsx_obrabotka__2_",
+"svod_table_name": "audit.cvetkov_d_LOADED_avtosoispolniteli_rks_po_zakazu_xlsx_net_aktirovaniya",
 
-"container_field": "`Контейнер`",
+"container_field": "`ANSWER.SVOD.SHAPKA.№ контейнера_cleaned`",
     
-"order_id_field": "`Заказ`",
+"order_id_field": "",
     
-"date_field": "`Дата для анализа`",
+"date_field": "`ANSWER.SVOD.Дата для анализа`",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
@@ -23,7 +23,7 @@
     "client_name",
     
     "--contract_number",
-    "service_provision_place_filial_name",
+    "--service_provision_place_filial_name",
     "--service_provision_place_location_name",
     "--service_details_points_from_catalog_id",
     "--service_details_points_to_catalog_id",
@@ -39,16 +39,14 @@
     
     "--epu_id",
 
-    "esu_id",
+    "--esu_id",
     "--service_name"    
 ],
 
-"esu_ids": [],
+"esu_id_columns": [],
         
 "where_conditions": [
-    "date_end >= '2024-01-01'",
-    "service_provision_place_filial_name LIKE '%МСК%'",
-    "esu_id IN ('0.04.01', '0.02.05.03')"
+    "date_end >= '2024-01-01'"
 ]
 
 }
