@@ -37,17 +37,18 @@
     "--service_details_points_from_station_name",
     "--service_details_points_to_station_name",
     
-    "--epu_id"
+    "--epu_id",
+
+    "esu_id",
+    "--service_name"    
 ],
 
-"esu_ids": [
-    "0.04.01",
-    "0.02.05.03"
-],
+"esu_ids": [],
         
 "where_conditions": [
-    "date_end >= '2023-01-01'",
-    "service_provision_place_filial_name LIKE '%МСК%' "
+    "date_end >= '2024-01-01'",
+    "service_provision_place_filial_name LIKE '%МСК%'",
+    "esu_id IN ('0.04.01', '0.02.05.03')"
 ]
 
 }

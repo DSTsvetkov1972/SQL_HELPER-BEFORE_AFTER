@@ -7,7 +7,7 @@
 {% endif %}
     esu_id,
     ----------------------------------------------------------------------------------------------------------------------------------------------
-{% for rks_field in rks_fields if  "--" not in rks_field %}
+{% for rks_field in rks_fields if  "--" not in rks_field and rks_field != 'esu_id' %}
 {% if rks_field == 'document_reasons_number_cleaned' %}
     replace(`document_reasons_number`, ' ', '') AS `document_reasons_number_striped`,
     multiIf(

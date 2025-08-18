@@ -36,6 +36,7 @@ SELECT
         `RKS_CONT.B_service_details_order_id`<>'', `RKS_CONT.B_min_Date_E`,
         NULL
     ) AS `B_min_Date_E`,
+	IF(`RKS_EQ.B_service_details_order_id`<>'', `RKS_EQ.B_service_details_order_id`, `RKS_CONT.B_service_details_order_id`) AS `B_service_details_order_id`,    
 {% for rks_field in rks_fields if  "--" not in rks_field %}
 	IF(`RKS_EQ.B_service_details_order_id`<>'', `RKS_EQ.B_{{ rks_field }}`, `RKS_CONT.B_{{ rks_field}}`) AS `B_{{ rks_field }}`,
 {% endfor -%}   
@@ -61,6 +62,7 @@ SELECT
         `RKS_CONT.A_service_details_order_id`<>'', `RKS_CONT.A_min_Date_E`,
         NULL
     ) AS `A_min_Date_E`,
+	IF(`RKS_EQ.A_service_details_order_id`<>'', `RKS_EQ.A_service_details_order_id`, `RKS_CONT.A_service_details_order_id`) AS `A_service_details_order_id`,      
 {% for rks_field in rks_fields if  "--" not in rks_field %}
 	IF(`RKS_EQ.A_service_details_order_id`<>'', `RKS_EQ.A_{{ rks_field }}`, `RKS_CONT.A_{{ rks_field}}`) AS `A_{{ rks_field }}`,
 {% endfor -%}   

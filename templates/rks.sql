@@ -23,9 +23,15 @@ FROM
 	INNER JOIN SVOD ON container_number = SVOD.`{{ container_field }}`
 WHERE
 {% for where_condition in where_conditions %}
+{%- if not loop.last or esu_ids%}
     {{ where_condition }} AND
+{% else %}
+    {{ where_condition }}
+{% endif %}
 {% endfor %}
-    esu_id IN ('{{"', '".join(esu_ids)}}')
+{% if esu_ids %}
+    esu_id IN ('{{ "', '".join(esu_ids) }}')
+{% endif %}
 GROUP BY
     {% include 'block_group_by.sql' %},
     esu_id
@@ -38,19 +44,27 @@ HAVING
 )
 SELECT
 	min(Date_E) AS `min_Date_E`,`service_details_order_id`,`container_number`,
-    {% for rks_field in rks_fields if  "--" not in rks_field %}
+{% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
-    {% endfor %}
-    {% for esu_id in esu_ids %}
+{% endfor %}
+{% if esu_ids %}
+{% for esu_id in esu_ids %}
     sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
     sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
     sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`,    
     sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last%},{% endif %}    
-    {% endfor -%}    
+{% endfor -%}    
+{% else %}
+    sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,    
+    sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
+    sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`,    
+    sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`    
+{% endif -%}    
 FROM
 	RKS
 GROUP BY	
 	{% include 'block_group_by.sql' %}
+
 
 )
 {% endmacro %}
