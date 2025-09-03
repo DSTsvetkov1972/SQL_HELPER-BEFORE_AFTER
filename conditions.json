@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.cvetkov_d_LOADED_avtosoispolniteli_rks_po_zakazu_xlsx_net_aktirovaniya",
+"svod_table_name": "audit.dop_oper_vedomosty_kras",
 
-"container_field": "`ANSWER.SVOD.SHAPKA.№ контейнера_cleaned`",
+"container_field": "`вагон или контейнер вычисленный`",
     
 "order_id_field": "",
     
-"date_field": "`ANSWER.SVOD.Дата для анализа`",
+"date_field": "`ZADACHI.ssylka_date_time`",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
@@ -15,7 +15,7 @@
 ],
 
 "rks_fields": [
-    "--document_reasons_number_cleaned",
+    "document_reasons_number_cleaned",
 
     "--provider_name",
     "--service_details_wagon_number",
@@ -43,7 +43,7 @@
     "--service_name"    
 ],
 
-"esu_id_columns": [],
+"esu_id_columns": ["0.01.01.06", "0.01.01.07"],
         
 "where_conditions": [
     "date_end >= '2024-01-01'"

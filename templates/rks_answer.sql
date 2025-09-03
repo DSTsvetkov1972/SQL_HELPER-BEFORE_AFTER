@@ -45,7 +45,7 @@ SELECT
     IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_with_vat`, `RKS_CONT.amount_in_rub_with_vat`) AS `amount_in_rub_with_vat`,    
     IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_without_vat`, `RKS_CONT.amount_in_rub_without_vat`) AS `amount_in_rub_without_vat`,
     IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_with_vat`, `RKS_CONT.amount_in_contract_currency_with_vat`) AS `amount_in_contract_currency_with_vat`,    
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_without_vat`, `RKS_CONT.amount_in_contract_currency_without_vat`) AS `amount_in_contract_currency_without_vat`    
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_without_vat`, `RKS_CONT.amount_in_contract_currency_without_vat`) AS `amount_in_contract_currency_without_vat`,    
 {% endif -%}   
 {# #}
     `SVOD.{{ container_field }}`,`SVOD.{{ order_id_field }}`

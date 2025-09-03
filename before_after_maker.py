@@ -22,6 +22,18 @@ while True:
             with open(os.path.join(os.getcwd(), 'conditions.json'), 'r', encoding="utf-8") as file:  
                 conditions = json.load(file)
 
+                if ("esu_id" in conditions['rks_fields'] or "service_name" in conditions['rks_fields']) and \
+                    conditions['esu_id_columns']:
+                    print(Fore.RED + "Неправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если список esu_id_columns не пустой!" + Fore.RESET)
+                    pyperclip.copy("Запрос не сформирован!\nНеправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если список esu_id_columns не пустой!")
+                    continue
+
+                if (not conditions['order_id_field'] and not conditions['date_field']):
+                    print(Fore.RED + "Неправильные параметры JSON: не задано ни поле order_id_field ни date_field!" + Fore.RESET)
+                    pyperclip.copy("Запрос не сформирован!\nНеправильные параметры JSON: не задано ни поле order_id_field ни date_field!")
+                    continue
+                
+
                 if conditions["svod_table_name"][:6] != 'audit.':
                     conditions["svod_table_name"] = "audit." + conditions["svod_table_name"]
 

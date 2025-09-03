@@ -9,10 +9,13 @@ SELECT * FROM {{ svod_table_name }}
 {# #}
 {% endif %}
 
+
+{% if date_field %}
 {% include 'rks_before_after.sql' %}
 {# #}
 
 {% include 'rks_before_after_answer.sql' %}
 {# #}
+{% endif %}
 
 {% include 'download.sql' %}
