@@ -5,7 +5,7 @@
 
 "container_field": "`вагон или контейнер вычисленный`",
     
-"order_id_field": "",
+"order_id_field": "`номер заказа вычисленный`",
     
 "date_field": "`ZADACHI.ssylka_date_time`",
 
@@ -15,7 +15,7 @@
 ],
 
 "rks_fields": [
-    "document_reasons_number_cleaned",
+    "--document_reasons_number_cleaned",
 
     "--provider_name",
     "--service_details_wagon_number",

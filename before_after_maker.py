@@ -10,7 +10,7 @@ init()
 while True:
 
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
-    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2025-08-18-14:37 *" + Fore.RESET)
+    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2025-09-03-14:37 *" + Fore.RESET)
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
 
     if os.path.exists(os.path.join(os.getcwd(), 'conditions.json')):
@@ -39,7 +39,8 @@ while True:
 
                 conditions["container_field"] = conditions["container_field"].replace("`","")
                 conditions["order_id_field"] = conditions["order_id_field"].replace("`","")
-                conditions["date_field"] = conditions["date_field"].replace("`","")                
+                conditions["date_field"] = conditions["date_field"].replace("`","")
+                conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']                               
     
                 print(Fore.CYAN) 
                 pprint(conditions)
