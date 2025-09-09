@@ -1,4 +1,8 @@
+{% if esu_id_columns %}
     min(date_end) AS Date_E,
+{% else %}
+    min(date_end) AS min_Date_E,
+{% endif %}
     service_details_order_id,
 {% if container_by_container_number %}
     replace(replace(replace(replace(replace(replace(replace(upperUTF8(service_details_container_number),' ',''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C') AS `container_number`,
