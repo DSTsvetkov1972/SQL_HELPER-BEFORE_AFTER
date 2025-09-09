@@ -52,7 +52,8 @@ HAVING
 	(amount_in_rub_without_vat<>0 OR 
 	amount_in_contract_currency_without_vat<>0 OR
 	amount_in_rub_with_vat<>0 OR
-    amount_in_contract_currency_with_vat<>0) 
+    amount_in_contract_currency_with_vat<>0)
+{% if esu_id_columns %}
 --) SELECT * FROM RKS 
 )
 SELECT
@@ -81,7 +82,9 @@ GROUP BY
 {% endfor %}
     `service_details_order_id`,
     `container_number`
-
+{% else %}
+) SELECT * FROM RKS 
+{% endif %}
 
 )
 {% endmacro %}

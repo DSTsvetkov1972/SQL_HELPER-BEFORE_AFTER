@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.dop_oper_vedomosty_kras",
+"svod_table_name": "audit.svod",
 
-"container_field": "`вагон или контейнер вычисленный`",
+"container_field": "`SHAPKA.№ контейнера`",
     
-"order_id_field": "`номер заказа вычисленный`",
+"order_id_field": "`SHAPKA.№ заказа`",
     
-"date_field": "`ZADACHI.ssylka_date_time`",
+"date_field": "`middle_date`",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
@@ -39,11 +39,11 @@
     
     "--epu_id",
 
-    "--esu_id",
+    "esu_id",
     "--service_name"    
 ],
 
-"esu_id_columns": ["0.01.01.06", "0.01.01.07"],
+"esu_id_columns": [],
         
 "where_conditions": [
     "date_end >= '2024-01-01'"
