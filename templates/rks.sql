@@ -22,30 +22,30 @@ FROM
 	(SELECT DISTINCT * FROM history.rks__directly WHERE client_number_id <> '0009309810' AND is_deleted=False) AS RD
 	INNER JOIN SVOD ON container_number = SVOD.`{{ container_field }}`
 WHERE
-{% for where_condition in where_conditions %}
-{%- if not loop.last or esu_id_columns%}
+    {% for where_condition in where_conditions %}
+    {%- if not loop.last or esu_id_columns%}
     {{ where_condition }} AND
-{% else %}
+    {% else %}
     {{ where_condition }}
-{% endif %}
-{% endfor %}
-{% if esu_id_columns %}
+    {% endif %}
+    {% endfor %}
+    {% if esu_id_columns %}
     esu_id IN ('{{ "', '".join(esu_id_columns) }}')
-{% endif %}
+    {% endif %}
 GROUP BY
-{% for rks_field in rks_fields if  "--" not in rks_field %}
-{% if rks_field == 'document_reasons_number_cleaned' %}
+    {% for rks_field in rks_fields if  "--" not in rks_field %}
+    {% if rks_field == 'document_reasons_number_cleaned' %}
     `document_reasons_number_striped`,
     `document_reasons_number_letters`,
     `document_reasons_number_figures`,
     `document_reasons_number_cleaned`,
-{% else %}
+    {% else %}
     `{{ rks_field }}`,
-{% endif %}
-{% endfor %}
-{% if esu_id_columns %}
+    {% endif %}
+    {% endfor %}
+    {% if esu_id_columns %}
     `esu_id`,
-{% endif %}
+    {% endif %}
     `service_details_order_id`,
     `container_number`
 HAVING
@@ -58,28 +58,28 @@ HAVING
 )
 SELECT
 	min(Date_E) AS `min_Date_E`,`service_details_order_id`,`container_number`,
-{% for rks_field in rks_fields if  "--" not in rks_field %}
+    {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
-{% endfor %}
-{% if esu_id_columns %}
-{% for esu_id in esu_id_columns %}
+    {% endfor %}
+    {% if esu_id_columns %}
+    {% for esu_id in esu_id_columns %}
     sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
     sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
     sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`,    
     sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last%},{% endif %}    
-{% endfor -%}    
-{% else %}
+    {% endfor -%}    
+    {% else %}
     sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,    
     sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
     sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`,    
     sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`    
-{% endif -%}    
+    {% endif -%}    
 FROM
 	RKS
 GROUP BY	
-{% for rks_field in rks_fields if  "--" not in rks_field %}
+    {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
-{% endfor %}
+    {% endfor %}
     `service_details_order_id`,
     `container_number`
 {% else %}
