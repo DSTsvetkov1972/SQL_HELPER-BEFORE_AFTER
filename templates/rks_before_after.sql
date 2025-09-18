@@ -7,7 +7,7 @@ CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_cont
 CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_eq
 {% endif %}
 ENGINE = MergeTree()
-ORDER BY `SVOD.{{ container_field }}`
+ORDER BY tuple()
 AS (
 
 WITH 

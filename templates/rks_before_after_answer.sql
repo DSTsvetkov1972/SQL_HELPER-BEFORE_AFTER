@@ -1,7 +1,7 @@
 -- SELECT * FROM audit.{{ user }}_rks_before_after
 CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after
 ENGINE = MergeTree()
-ORDER BY `SVOD.{{ container_field }}`
+ORDER BY tuple()
 AS (
 
 WITH 

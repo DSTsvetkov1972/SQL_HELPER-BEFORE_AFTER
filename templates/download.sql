@@ -36,10 +36,10 @@ SELECT
 	RKS.`amount_in_contract_currency_without_vat`,
     {% endif %}
     {% endif %}  
-{%- if order_id_field and date_field %}
-{# #}
+	{%- if order_id_field and date_field %}
+	{# #}
     '<==RKS BA==>',
-{%- endif %}    
+	{%- endif %}    
 FROM
 	SVOD
     {%- if order_id_field %}    
@@ -68,7 +68,7 @@ SELECT
 	BEFORE_AFTER.`B_amount_in_contract_currency_with_vat`,
 	BEFORE_AFTER.`B_amount_in_contract_currency_without_vat`,
     {% endif %}
-{# #}
+    {# #}
 	'<==B A==>',
     BEFORE_AFTER.`A_подтянуто по`, BEFORE_AFTER.`A_date_diff`, BEFORE_AFTER.`A_min_Date_E`, BEFORE_AFTER. `A_service_details_order_id`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}

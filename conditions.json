@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod",
+"svod_table_name": "audit.aaa",
 
-"container_field": "`SHAPKA.№ контейнера`",
+"container_field": "`container_number`",
     
-"order_id_field": "`SHAPKA.№ заказа`",
+"order_id_field": "`bpm__order__id`",
     
-"date_field": "`middle_date`",
+"date_field": "`datetime_move_started`",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
@@ -46,7 +46,8 @@
 "esu_id_columns": [],
         
 "where_conditions": [
-    "date_end >= '2024-01-01'"
+    "date_end >= '2024-01-01'",
+    "esu_id = '1.02.06'"    
 ]
 
 }

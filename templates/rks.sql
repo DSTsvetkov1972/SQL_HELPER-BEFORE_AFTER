@@ -7,7 +7,7 @@ CREATE OR REPLACE TABLE audit.{{ user }}_rks_cont
 CREATE OR REPLACE TABLE audit.{{ user }}_rks_eq
 {% endif %}
 ENGINE = MergeTree()
-ORDER BY container_number
+ORDER BY tuple()
 AS (
 
 WITH 
