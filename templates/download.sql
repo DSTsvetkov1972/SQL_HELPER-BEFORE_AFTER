@@ -86,7 +86,7 @@ SELECT
 	BEFORE_AFTER.`A_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`A_amount_in_contract_currency_with_vat`,
 	BEFORE_AFTER.`A_amount_in_contract_currency_without_vat`
-    {% endif %} 
+    {% endif -%} 
 FROM
 	ANSWER
 	LEFT JOIN BEFORE_AFTER ON ANSWER.`{{ container_field }}` = BEFORE_AFTER.`SVOD.{{ container_field }}` AND ANSWER.`{{ date_field }}` = BEFORE_AFTER.`SVOD.{{ date_field }}`

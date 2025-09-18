@@ -19,3 +19,9 @@ SELECT * FROM {{ svod_table_name }}
 {% endif %}
 
 {% include 'download.sql' %}
+{# #}
+
+
+/* сформировано на основе conditions.json
+{{ json }}
+*/

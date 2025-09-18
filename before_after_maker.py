@@ -10,7 +10,7 @@ init()
 while True:
 
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
-    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2025-09-03-14:37 *" + Fore.RESET)
+    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2025-09-18-13:30 *" + Fore.RESET)
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
 
     if os.path.exists(os.path.join(os.getcwd(), 'conditions.json')):
@@ -21,7 +21,7 @@ while True:
         try:
             with open(os.path.join(os.getcwd(), 'conditions.json'), 'r', encoding="utf-8") as file:  
                 conditions = json.load(file)
-
+                
                 if ("esu_id" in conditions['rks_fields'] or "service_name" in conditions['rks_fields']) and \
                     conditions['esu_id_columns']:
                     print(Fore.RED + "Неправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если список esu_id_columns не пустой!" + Fore.RESET)
@@ -32,7 +32,6 @@ while True:
                     print(Fore.RED + "Неправильные параметры JSON: не задано ни поле order_id_field ни date_field!" + Fore.RESET)
                     pyperclip.copy("Запрос не сформирован!\nНеправильные параметры JSON: не задано ни поле order_id_field ни date_field!")
                     continue
-                
 
                 if conditions["svod_table_name"][:6] != 'audit.':
                     conditions["svod_table_name"] = "audit." + conditions["svod_table_name"]
@@ -41,10 +40,15 @@ while True:
                 conditions["order_id_field"] = conditions["order_id_field"].replace("`","")
                 conditions["date_field"] = conditions["date_field"].replace("`","")
                 conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']                               
-    
+
                 print(Fore.CYAN) 
                 pprint(conditions)
                 print(Fore.RESET)
+
+            with open(os.path.join(os.getcwd(), 'conditions.json'), 'r', encoding="utf-8") as file:  
+                conditions['json'] = file.read()
+                # print(conditions['json'])
+
 
             loader = FileSystemLoader(os.path.join(os.getcwd(),'templates'))
             env = Environment(loader=loader, trim_blocks=True, lstrip_blocks=True)
@@ -56,6 +60,7 @@ while True:
             print(Fore.GREEN + "SQL скопирован в буфер обмена!" + Fore.RESET)
 
         except Exception as e:
+        #    print('aaaaaaaaaaaaaaaaa')
             print(Fore.RED, e, Fore.RESET)
 
     else:   

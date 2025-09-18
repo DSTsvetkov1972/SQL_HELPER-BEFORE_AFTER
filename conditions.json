@@ -4,10 +4,10 @@
 "svod_table_name": "audit.aaa",
 
 "container_field": "`container_number`",
-    
-"order_id_field": "`bpm__order__id`",
-    
-"date_field": "`datetime_move_started`",
+
+"order_id_field": "order_id",
+
+"date_field": "datetime_move_started",
 
 "forbidden_rks_fields": [
     "esu_id не использовать в этом скрипте!!!",
@@ -19,38 +19,35 @@
 
     "--provider_name",
     "--service_details_wagon_number",
-    
+
     "client_name",
-    
+
     "--contract_number",
     "--service_provision_place_filial_name",
     "--service_provision_place_location_name",
     "--service_details_points_from_catalog_id",
     "--service_details_points_to_catalog_id",
-    
+
     "service_details_points_from_catalog_name",
     "service_details_points_to_catalog_name",
-    
+
     "--service_details_points_from_station_id",
     "--service_details_points_to_station_id",
-    
+
     "--service_details_points_from_station_name",
     "--service_details_points_to_station_name",
-    
+
     "--epu_id",
 
-    "esu_id",
+    "--esu_id",
     "--service_name"    
 ],
 
 "esu_id_columns": [],
-        
+
 "where_conditions": [
     "date_end >= '2024-01-01'",
-    "esu_id = '1.02.06'"    
+    "esu_id = '1.02.06'" 
 ]
 
 }
-
-
-
