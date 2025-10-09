@@ -42,7 +42,7 @@ while True:
                 conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']                               
 
                 print(Fore.CYAN) 
-                pprint(conditions)
+                pprint(conditions, width=120)
                 print(Fore.RESET)
 
             with open(os.path.join(os.getcwd(), 'conditions.json'), 'r', encoding="utf-8") as file:  
