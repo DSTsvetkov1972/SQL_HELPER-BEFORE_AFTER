@@ -1,39 +1,39 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.aaa",
+"svod_table_name": "audit.svod_fraht_CKP_STF_1",
 
-"container_field": "`container_number`",
+"container_field": "`Container №`",
 
-"order_id_field": "order_id",
+"order_id_field": "`TC iSales order number for seafreight`",
 
-"date_field": "datetime_move_started",
-
-"forbidden_rks_fields": [
-    "esu_id не использовать в этом скрипте!!!",
-    "service_name !!! не использовать в этом скрипте!!!"
-],
+"date_field": "`Дата для Before-After`",
 
 "rks_fields": [
+    "--document_reasons_number",
     "--document_reasons_number_cleaned",
+
+    "--service_details_container_type",
+
+    "--items_etsng_id",
+    "--items_gng_id",
 
     "--provider_name",
     "--service_details_wagon_number",
 
     "client_name",
 
-    "--contract_number",
+    "contract_number",
     "--service_provision_place_filial_name",
     "--service_provision_place_location_name",
+    
     "--service_details_points_from_catalog_id",
     "--service_details_points_to_catalog_id",
-
     "service_details_points_from_catalog_name",
     "service_details_points_to_catalog_name",
 
     "--service_details_points_from_station_id",
     "--service_details_points_to_station_id",
-
     "--service_details_points_from_station_name",
     "--service_details_points_to_station_name",
 
@@ -43,11 +43,10 @@
     "--service_name"    
 ],
 
-"esu_id_columns": [],
+"esu_id_columns": ["0.02.03.01"],
 
 "where_conditions": [
-    "date_end >= '2024-01-01'",
-    "esu_id = '1.02.06'" 
+    "date_end >= '2024-07-01'"
 ]
 
 }

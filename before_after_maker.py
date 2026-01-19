@@ -1,5 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 from pprint import pprint
+from click import get_svod_table_columns
 import pyperclip
 from colorama import Fore, init, Style
 import json  
@@ -39,7 +40,12 @@ while True:
                 conditions["container_field"] = conditions["container_field"].replace("`","")
                 conditions["order_id_field"] = conditions["order_id_field"].replace("`","")
                 conditions["date_field"] = conditions["date_field"].replace("`","")
-                conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']                               
+                conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']
+
+                conditions['svod_table_columns'] = get_svod_table_columns(
+                    conditions["svod_table_name"],
+                    conditions["container_field"],
+                    conditions["order_id_field"])                             
 
                 print(Fore.CYAN) 
                 pprint(conditions, width=120)

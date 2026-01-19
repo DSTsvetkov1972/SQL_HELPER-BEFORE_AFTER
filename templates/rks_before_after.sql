@@ -12,7 +12,7 @@ AS (
 
 WITH 
 SVOD AS (
-	SELECT DISTINCT `{{ container_field }}`, `{{ date_field }}` FROM {{ svod_table_name }} WHERE `{{ container_field }}`<>'' AND `{{ date_field }}` IS NOT NULL
+	SELECT DISTINCT `{{ container_field }}`, `{{ date_field }}` FROM audit.{{ user }}_svod WHERE `{{ container_field }}`<>'' AND `{{ date_field }}` IS NOT NULL
 --) SELECT * FROM SVOD
 ),
 RKS_BEFORE_AFTER AS (

@@ -1,7 +1,7 @@
 --download
 WITH
 SVOD AS (
-SELECT * FROM {{ svod_table_name }}
+SELECT * FROM audit.{{ user }}_svod
 ),
 RKS AS (
 SELECT * FROM audit.{{ user }}_rks

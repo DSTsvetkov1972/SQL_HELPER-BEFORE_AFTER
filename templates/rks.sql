@@ -12,7 +12,7 @@ AS (
 
 WITH 
 SVOD AS (
-	SELECT DISTINCT `{{ container_field }}` FROM {{ svod_table_name }} WHERE `{{ container_field }}` <>''
+	SELECT DISTINCT `{{ container_field }}` FROM audit.{{ user }}_svod WHERE `{{ container_field }}` <>''
 --) SELECT * FROM SVOD    
 ),
 RKS AS (

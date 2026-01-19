@@ -6,7 +6,7 @@ AS (
 
 WITH 
 SVOD AS (
-SELECT DISTINCT `{{ container_field }}`, `{{ date_field }}` FROM {{ svod_table_name }}
+SELECT DISTINCT `{{ container_field }}`, `{{ date_field }}` FROM audit.{{ user }}_svod
 --) SELECT * FROM SVOD
 ),
 RKS AS (
