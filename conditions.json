@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod_fraht_CKP_STF_1",
+"svod_table_name": "audit.svod_fraht_CKP_LOGIN_NMP",
 
 "container_field": "`Container №`",
 
 "order_id_field": "`TC iSales order number for seafreight`",
 
-"date_field": "`Дата для Before-After`",
+"date_field": "`Bill Of Lading Date`",
 
 "rks_fields": [
     "--document_reasons_number",
