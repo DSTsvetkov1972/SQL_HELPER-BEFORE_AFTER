@@ -1,4 +1,4 @@
--- SELECT * FROM audit.{{ user }}_svod
+-- SELECT * FROM audit.{{ user }}_svod WHERE length(`{{ container_field }}`)<>11
 CREATE OR REPLACE TABLE audit.{{ user }}_svod
 ENGINE = MergeTree()
 ORDER BY tuple()
