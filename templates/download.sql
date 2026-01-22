@@ -3,12 +3,16 @@ WITH
 SVOD AS (
 SELECT * FROM audit.{{ user }}_svod
 ),
+{% if order_id_field %}
 RKS AS (
 SELECT * FROM audit.{{ user }}_rks
 ),
+{% endif -%} 
+{% if date_field %}
 BEFORE_AFTER AS (
 SELECT * FROM audit.{{ user }}_rks_before_after
 ),
+{% endif -%} 
 ANSWER AS (
 SELECT
 	SVOD.*,

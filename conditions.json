@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod_fraht_CKP_LOGIN_NMP",
+"svod_table_name": "audit.svod_samozahvat",
 
-"container_field": "`Container №`",
+"container_field": "`Контейнер`",
 
-"order_id_field": "`TC iSales order number for seafreight`",
+"order_id_field": "`№ заказа (один)`",
 
-"date_field": "`Bill Of Lading Date`",
+"date_field": "",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -43,7 +43,7 @@
     "--service_name"    
 ],
 
-"esu_id_columns": ["0.02.03.01"],
+"esu_id_columns": ["0.01.01.02"],
 
 "where_conditions": [
     "date_end >= '2024-07-01'"
