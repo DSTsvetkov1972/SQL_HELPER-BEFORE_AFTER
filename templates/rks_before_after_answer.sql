@@ -93,7 +93,3 @@ FROM
 
 )
 {# #}
-
-	IF(`RKS_EQ.A_service_details_order_id`<>'', `RKS_EQ.A_service_details_points_to_catalog_name`, `RKS_CONT.A_service_details_points_to_catalog_name`) AS `A_service_details_points_to_catalog_name`,
- 
-	IF(`RKS_EQ.A_service_details_order_id`<>'', `RKS_EQ.A_0.01.01.02_amount_in_rub_with_vat`, `RKS_CONT.A_0.01.01.02_amount_in_rub_with_vat`) AS `A_0.01.01.02_amount_in_rub_with_vat`,
