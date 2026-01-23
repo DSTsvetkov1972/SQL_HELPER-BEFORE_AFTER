@@ -58,22 +58,22 @@ HAVING
 )
 SELECT
 	min(Date_E) AS `min_Date_E`,
-    `service_details_order_id`,`container_number`,
+	`service_details_order_id`,`container_number`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}
     {% if esu_id_columns %}
     {% for esu_id in esu_id_columns %}
-    sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
-    sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
-    sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`,    
-    sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last%},{% endif %}    
+	sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
+	sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
+	sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`,    
+	sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last%},{% endif %}    
     {% endfor -%}    
     {% else %}
-    sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,    
-    sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
-    sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`,    
-    sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`    
+	sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,    
+	sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
+	sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`,    
+	sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`    
     {% endif -%}    
 FROM
 	RKS
