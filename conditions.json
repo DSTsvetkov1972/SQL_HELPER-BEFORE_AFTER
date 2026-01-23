@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod_samozahvat",
+"svod_table_name": "audit.svod_fraht_CKP_SASKO",
 
-"container_field": "`Контейнер`",
+"container_field": "`№ контейнера`",
 
-"order_id_field": "`№ заказа (один)`",
+"order_id_field": "`Заказ`",
 
-"date_field": "",
+"date_field": "`Дата коносамента`",
 
 "rks_fields": [
     "--document_reasons_number",

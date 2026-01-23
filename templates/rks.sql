@@ -57,7 +57,8 @@ HAVING
 --) SELECT * FROM RKS 
 )
 SELECT
-	min(Date_E) AS `min_Date_E`,`service_details_order_id`,`container_number`,
+	min(Date_E) AS `min_Date_E`,
+    `service_details_order_id`,`container_number`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}

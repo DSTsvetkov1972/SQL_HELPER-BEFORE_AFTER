@@ -29,7 +29,7 @@ SELECT
     argMaxIf(`{{ esu_id }}_amount_in_rub_without_vat`, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_rub_without_vat`,
     argMaxIf(`{{ esu_id }}_amount_in_contract_currency_with_vat`, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_contract_currency_with_vat`,
     argMaxIf(`{{ esu_id }}_amount_in_contract_currency_without_vat`, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ esu_id }}_amount_in_contract_currency_without_vat`,	
-    {% endfor %}
+    {% endfor -%}
     {% else %}
     argMaxIf(`amount_in_rub_with_vat`, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`) AS `B_amount_in_rub_with_vat`,
     argMaxIf(`amount_in_rub_without_vat`, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`) AS `B_amount_in_rub_without_vat`,

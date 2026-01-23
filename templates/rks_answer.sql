@@ -22,7 +22,7 @@ FROM
 )
 SELECT
     multiIf(
-        `RKS_EQ.service_details_order_id`<>'', 'equipment_number',        
+        `RKS_EQ.service_details_order_id`<>'', 'equipment_number',
         `RKS_CONT.service_details_order_id`<>'', 'container_number',
         ''
     ) AS `подтянуто по`,
@@ -33,8 +33,8 @@ SELECT
     ) AS `min_Date_E`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
 	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ rks_field }}`, `RKS_CONT.{{ rks_field}}`) AS `{{ rks_field }}`,
-    {% endfor -%} 
-    {% if esu_id_columns %}  
+    {% endfor -%}
+    {% if esu_id_columns %}
     {% for esu_id in esu_id_columns %}
 	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_rub_with_vat`, `RKS_CONT.{{ esu_id }}_amount_in_rub_with_vat`) AS `{{ esu_id}}_amount_in_rub_with_vat`,
 	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_rub_without_vat`, `RKS_CONT.{{ esu_id }}_amount_in_rub_without_vat`) AS `{{ esu_id}}_amount_in_rub_without_vat`,
@@ -42,11 +42,11 @@ SELECT
 	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_contract_currency_without_vat`, `RKS_CONT.{{ esu_id }}_amount_in_contract_currency_without_vat`) AS `{{ esu_id}}_amount_in_contract_currency_without_vat`,
     {% endfor -%}
     {% else %}
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_with_vat`, `RKS_CONT.amount_in_rub_with_vat`) AS `amount_in_rub_with_vat`,    
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_with_vat`, `RKS_CONT.amount_in_rub_with_vat`) AS `amount_in_rub_with_vat`,
     IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_without_vat`, `RKS_CONT.amount_in_rub_without_vat`) AS `amount_in_rub_without_vat`,
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_with_vat`, `RKS_CONT.amount_in_contract_currency_with_vat`) AS `amount_in_contract_currency_with_vat`,    
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_without_vat`, `RKS_CONT.amount_in_contract_currency_without_vat`) AS `amount_in_contract_currency_without_vat`,    
-    {% endif -%}   
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_with_vat`, `RKS_CONT.amount_in_contract_currency_with_vat`) AS `amount_in_contract_currency_with_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_without_vat`, `RKS_CONT.amount_in_contract_currency_without_vat`) AS `amount_in_contract_currency_without_vat`,
+    {% endif %}
     {# #}
     `SVOD.{{ container_field }}`,`SVOD.{{ order_id_field }}`
 FROM

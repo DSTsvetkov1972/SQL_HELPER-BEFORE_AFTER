@@ -1,2 +1,4 @@
-s = '�'
-print(ord(s[-1]))
+s = '''
+
+'''
+print(ord(s))
