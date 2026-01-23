@@ -22,7 +22,11 @@ SELECT
     '<==SVOD BA==>',
     {%- endif %}
     {% if order_id_field %}	
-    RKS.`подтянуто по`, RKS.`min_Date_E`,
+    RKS.`подтянуто по`,
+    {% if date_field %}
+    date_diff(DAY, `{{ date_field }}`, RKS.`min_Date_E`) AS `date_diff`,
+    {% endif %}
+    RKS.`min_Date_E`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     RKS.{{ rks_field }},
     {% endfor -%}
