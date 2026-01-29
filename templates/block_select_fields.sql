@@ -5,7 +5,7 @@
 {% endif %}
     service_details_order_id,
 {% if container_by_container_number %}
-    replace(replace(replace(replace(replace(replace(replace(upperUTF8(service_details_container_number),' ',''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C') AS `container_number`,
+    replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(upperUTF8(`service_details_container_number`),' ',''),'	',''), ' ', ''), '　', ''), '\n', ''), '\r', ''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C'), 'Н', 'H'), 'В', 'B'), 'Х', 'X') AS `container_number`,
 {% else %}
     equipment_number AS `container_number`,
 {% endif %}
@@ -14,21 +14,16 @@
 {% endif %}
     ----------------------------------------------------------------------------------------------------------------------------------------------
 {% for rks_field in rks_fields if  "--" not in rks_field %}
-{% if rks_field == 'document_reasons_number_cleaned' %}
-    replace(`document_reasons_number`, ' ', '') AS `document_reasons_number_striped`,
-    multiIf(
-        ((substringUTF8(upperUTF8(`document_reasons_number_striped`),1,2) AS first_two BETWEEN 'АА' AND 'ЯЯ') OR
-        first_two BETWEEN 'AA' AND 'ZZ') AND lengthUTF8(`document_reasons_number_striped`)>2 AS condition_first_two, first_two,
-        ((substringUTF8(upperUTF8(`document_reasons_number_striped`),1,2) AS first_one BETWEEN 'А' AND 'Я') OR 
-        first_one BETWEEN 'A' AND 'Z') AND lengthUTF8(`document_reasons_number_striped`)>1 AS condition_first_one, first_one,
-        ''
-    ) AS `document_reasons_number_letters`,
-    multiIf(
-        condition_first_two, toInt64OrNull(substringUTF8(`document_reasons_number_striped`, 3, lengthUTF8(`document_reasons_number_striped`)-2)),
-        condition_first_one, toInt64OrNull(substringUTF8(`document_reasons_number_striped`, 2, lengthUTF8(`document_reasons_number_striped`)-1)),
-        toInt64OrNull(`document_reasons_number_striped`)
-    ) AS `document_reasons_number_figures`,
-    concat(document_reasons_number_letters, toString(document_reasons_number_figures)) AS `document_reasons_number_cleaned`,
+{% if rks_field == 'Отправка_cleaned' %}
+    IF(
+    	c=-777,
+    	Null,
+		replace(concat(
+			IF(substringUTF8(replace(replace(replace(replace(replace(replace(upperUTF8(`document_reasons_number`),' ',''),'	',''),' ', ''), '　', ''), '\n', ''), '\r', '') AS `document_reasons_stripped`, 1, 1) AS a BETWEEN 'A' AND 'Z' OR a BETWEEN 'А' AND 'Я', a, '~') AS first_symbol,
+			IF(substringUTF8(`document_reasons_stripped`, 2, 1) AS b BETWEEN 'A' AND 'Z' OR b BETWEEN 'А' AND 'Я', b, '~') AS second_symbol,
+			toString(toInt32OrDefault(replace(replace(`document_reasons_stripped`, first_symbol, ''),	second_symbol, ''), toInt32(-777)) AS c
+		)),'~','')
+	) AS `Отправка_cleaned`,
 {% elif rks_field == 'provider_name' %}
     dictGet('dict_counterparty', 'name', dictGet('dict_contract','owner',provider_contract_id)) AS `provider_name`,
 {% elif rks_field == 'client_name' %}

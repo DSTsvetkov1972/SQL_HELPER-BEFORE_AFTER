@@ -1,17 +1,17 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod_fraht_CKP_SASKO",
+"svod_table_name": "audit.samozahvat_spravka",
 
-"container_field": "`№ контейнера`",
+"container_field": "`Контейнера`",
 
-"order_id_field": "`Заказ`",
+"order_id_field": "`Отправка_cleaned`",
 
-"date_field": "`Дата коносамента`",
+"date_field": "`Дата погрузки`",
 
 "rks_fields": [
     "--document_reasons_number",
-    "--document_reasons_number_cleaned",
+    "Отправка_cleaned",
 
     "--service_details_container_type",
 
@@ -43,7 +43,12 @@
     "--service_name"    
 ],
 
-"esu_id_columns": ["0.01.01.02"],
+"esu_id_columns": [
+    "0.01.01.01",
+    "0.01.01.02",
+    "0.01.01.04",
+    "0.01.01.08",
+    "2.01.01.01"],
 
 "where_conditions": [
     "date_end >= '2024-07-01'"

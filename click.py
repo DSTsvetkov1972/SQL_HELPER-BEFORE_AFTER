@@ -28,11 +28,11 @@ def get_df_of_click(query: str):
         return connection.execute(query)
         
     
-def get_svod_table_columns(svod_table, container_field=None, order_field=None):
+def get_svod_table_columns(svod_table, container_field='', order_field=''):
 
     print(Fore.BLUE, f'Получаем список колонок таблицы {svod_table}', Fore.RESET)
 
-    sql = f'SHOW COLUMNS FROM { svod_table }'
+    sql = f'DESCRIBE TABLE  { svod_table }'
     svod_table_info = get_df_of_click(sql)
     svod_table_columns = []
     
@@ -77,7 +77,7 @@ def get_svod_table_columns(svod_table, container_field=None, order_field=None):
 
 
 if __name__ == '__main__':
-    print(get_svod_table_columns('audit.cvetkov_d_fraht_URAL', '`№контейнера`', 'Заказ'))
+    print(get_svod_table_columns('audit.samozahvat_spravka'))
 
 
     
