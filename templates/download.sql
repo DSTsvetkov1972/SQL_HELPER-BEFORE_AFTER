@@ -28,7 +28,7 @@ SELECT
     {% endif %}
     RKS.`min_Date_E`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
-    RKS.{{ rks_field }},
+    RKS.`{{ rks_field }}`,
     {% endfor -%}
     {% if esu_id_columns %}
     {% for esu_id in esu_id_columns %}
