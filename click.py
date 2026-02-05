@@ -47,7 +47,7 @@ def get_svod_table_columns(svod_table, container_field='', order_field=''):
             else:
                 str_end = ''
 
-            column_name_processed = f"\n\treplace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(upperUTF8(`{ column_name }`),' ',''),'	',''), ' ', ''), '　', ''), '\\n', ''), '\\r', ''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C'), 'Н', 'H'), 'В', 'B'), 'Х', 'X'), 'GR', '') AS `{ column_name }`{str_end}"
+            column_name_processed = f"\n\treplace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(upperUTF8(`{ column_name }`),' ',''),'	',''), ' ', ''), '　', ''), '\\n', ''), '\\r', ''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C'), 'Н', 'H'), 'В', 'B'), 'Х', 'X'), ' GR', '') AS `{ column_name }`{str_end}"
         
         elif column_name == order_field.replace('`', ''):
                         

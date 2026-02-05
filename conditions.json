@@ -1,17 +1,17 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.samozahvat_spravka",
+"svod_table_name": "audit.svod_oder_id_aravat",
 
-"container_field": "`Контейнера`",
+"container_field": "container_number",
 
-"order_id_field": "`Отправка_cleaned`",
+"order_id_field": "service_details_order_id`",
 
-"date_field": "`Дата погрузки`",
+"date_field": "`Дата оказания услуги`",
 
 "rks_fields": [
     "--document_reasons_number",
-    "Отправка_cleaned",
+    "--Отправка_cleaned",
 
     "--service_details_container_type",
 
@@ -43,15 +43,11 @@
     "--service_name"    
 ],
 
-"esu_id_columns": [
-    "0.01.01.01",
-    "0.01.01.02",
-    "0.01.01.04",
-    "0.01.01.08",
-    "2.01.01.01"],
+"esu_id_columns": [],
 
 "where_conditions": [
-    "date_end >= '2024-07-01'"
+    "date_end >= '2024-07-01'",
+    "dictGet('dict_location', 'country', service_provision_place_location_external_id) = '398'"
 ]
 
 }
