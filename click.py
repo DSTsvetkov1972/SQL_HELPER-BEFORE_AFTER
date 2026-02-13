@@ -12,7 +12,7 @@ CLICK_USER = os.getenv('CLICK_USER')
 CLICK_PWD = os.getenv('CLICK_PWD')
 
 
-def get_df_of_click(query: str):
+def get_table_info(svod_table):
 
     connection=Client(
         host=CLICK_HOST,
@@ -24,21 +24,24 @@ def get_df_of_click(query: str):
         verify=False,
         settings=dict(socket_timeout=3000000, send_timeout=3000000, keepAliveTimeout=3000000)
         )
-    with connection:
-        return connection.execute(query)
-        
     
-def get_svod_table_columns(svod_table, container_field='', order_field=''):
+    sql = f'DESCRIBE TABLE  { svod_table }'
 
     print(Fore.BLUE, f'Получаем список колонок таблицы {svod_table}', Fore.RESET)
 
-    sql = f'DESCRIBE TABLE  { svod_table }'
-    svod_table_info = get_df_of_click(sql)
+    with connection:
+        res = connection.execute(sql)
+        if res:
+            return [column[0] for column in res]
+        
+    
+def get_svod_table_columns(svod_table_info, container_field='', order_field=''):
+
     svod_table_columns = []
     
     for n, info in enumerate(svod_table_info, 1):
 
-        column_name = info[0].replace('`', '')
+        column_name = info.replace('`', '')
 
         if column_name == container_field.replace('`', ''):
 
@@ -75,20 +78,29 @@ def get_svod_table_columns(svod_table, container_field='', order_field=''):
 
     return svod_table_columns
 
-def get_max_column_len(svod_table_columns, with_vat):
+
+def get_max_column_len(svod_table_columns, date_field, with_vat, esu_id_columns):
+
+    if esu_id_columns and date_field:
+        svod_table_columns.append('A_0.01.01.01_amount_in_contract_currency_without_vat')
+    elif esu_id_columns and not date_field:
+        svod_table_columns.append('A_0.01.01.01_amount_in_contract_currency_without_vat')
+    elif not esu_id_columns and date_field:
+        svod_table_columns.append('A_amount_in_contract_currency_without_vat')
+    else:
+        svod_table_columns.append('amount_in_contract_currency_without_vat')
 
     lengths = [len(column) for column in svod_table_columns]
-    
-    if with_vat:
-        lengths.append(len('amount_in_contract_currency_without_vat'))
-    else:
-        lengths.append(len('amount_in_contract_currency_with_vat'))
-
     return max(lengths)
 
+
 if __name__ == '__main__':
-    svod_table_columns = get_svod_table_columns('audit.svod')
-    print(get_max_column_len(svod_table_columns, False))
+    table_info = get_table_info('audit.svod')
+
+    print(table_info)
+    
+    table_columns = get_svod_table_columns(table_info)
+    print(table_columns)
 
 
 

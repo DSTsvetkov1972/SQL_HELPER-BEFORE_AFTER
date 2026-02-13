@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader
 from pprint import pprint
-from click import get_svod_table_columns
+from click import get_svod_table_columns, get_max_column_len, get_table_info
 import pyperclip
 from colorama import Fore, init, Style
 import json  
@@ -11,7 +11,7 @@ init()
 while True:
 
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
-    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2025-09-18-13:30 *" + Fore.RESET)
+    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2026-02-13-17:36 *" + Fore.RESET)
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
 
     if os.path.exists(os.path.join(os.getcwd(), 'conditions.json')):
@@ -42,10 +42,19 @@ while True:
                 conditions["date_field"] = conditions["date_field"].replace("`","")
                 conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']
 
+                table_info = get_table_info(
+                    conditions["svod_table_name"])
+                
                 conditions['svod_table_columns'] = get_svod_table_columns(
-                    conditions["svod_table_name"],
+                    table_info,
                     conditions["container_field"],
-                    conditions["order_id_field"])                             
+                    conditions["order_id_field"])
+
+                conditions['max_column_len'] = get_max_column_len(
+                    table_info,
+                    conditions["date_field"],
+                    conditions["with_vat"],
+                    conditions["esu_id_columns"])
 
                 print(Fore.CYAN) 
                 pprint(conditions, width=120)
