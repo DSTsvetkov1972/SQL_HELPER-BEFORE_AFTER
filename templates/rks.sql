@@ -57,17 +57,22 @@ SELECT
     {% endfor %}
     {% if esu_id_columns %}
     {% for esu_id in esu_id_columns %}
-	sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,    
-	sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
-	sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`,    
-	sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last%},{% endif %}    
+    sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
+	sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last or with_vat %},
+    {% endif %}
+    {% if with_vat %}
+	sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,
+	sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`{% if not loop.last%},{% endif %}
+    {% endif %}
     {% endfor -%}    
     {% else %}
-	sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,    
-	sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
-	sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`,    
-	sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`    
-    {% endif -%}    
+    sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
+	sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`,
+    {% if with_vat %}    
+	sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,
+	sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`
+    {% endif %}
+    {% endif %}    
 FROM
 	RKS
 GROUP BY	

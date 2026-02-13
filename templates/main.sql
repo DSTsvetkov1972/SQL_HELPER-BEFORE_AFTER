@@ -1,8 +1,3 @@
-SELECT * FROM {{ svod_table_name }}
-{# #}
-
-
-{# #}
 {% include 'svod.sql' %}
 {# #}
 

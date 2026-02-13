@@ -7,7 +7,7 @@ AS (
 SELECT
     {{ "".join(svod_table_columns).replace('\n\t\n\t', '\n\t') }}
 FROM
-    {{ svod_table_name }}
+    {{ svod_table_name }} -- SELECT * FROM {{ svod_table_name }}
  
 )
 {# #}

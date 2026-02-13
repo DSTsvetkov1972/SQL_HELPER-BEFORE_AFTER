@@ -75,9 +75,22 @@ def get_svod_table_columns(svod_table, container_field='', order_field=''):
 
     return svod_table_columns
 
+def get_max_column_len(svod_table_columns, with_vat):
+
+    lengths = [len(column) for column in svod_table_columns]
+    
+    if with_vat:
+        lengths.append(len('amount_in_contract_currency_without_vat'))
+    else:
+        lengths.append(len('amount_in_contract_currency_with_vat'))
+
+    return max(lengths)
 
 if __name__ == '__main__':
-    print(get_svod_table_columns('audit.samozahvat_spravka'))
+    svod_table_columns = get_svod_table_columns('audit.svod')
+    print(get_max_column_len(svod_table_columns, False))
+
+
 
 
     

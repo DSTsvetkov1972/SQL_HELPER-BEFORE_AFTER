@@ -7,21 +7,21 @@ SELECT * FROM audit.{{ user }}_svod
 RKS AS (
 SELECT * FROM audit.{{ user }}_rks
 ),
-{% endif -%} 
+{% endif %}
 {% if date_field %}
 BEFORE_AFTER AS (
 SELECT * FROM audit.{{ user }}_rks_before_after
 ),
-{% endif -%} 
+{% endif %}
 ANSWER AS (
 SELECT
 	SVOD.*,
-    {% if order_id_field %}
+{% if order_id_field %}
     '<==SVOD RKS==>',
-    {%- else %}
+{% else %}
     '<==SVOD BA==>',
-    {%- endif %}
-    {% if order_id_field %}	
+{% endif %}
+{% if order_id_field %}
     RKS.`подтянуто по`,
     {% if date_field %}
     date_diff(DAY, `{{ date_field }}`, RKS.`min_Date_E`) AS `date_diff`,
@@ -29,28 +29,34 @@ SELECT
     RKS.`min_Date_E`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     RKS.`{{ rks_field }}`,
-    {% endfor -%}
+    {% endfor %}
     {% if esu_id_columns %}
-    {% for esu_id in esu_id_columns %}
-	RKS.`{{ esu_id }}_amount_in_rub_with_vat`,
-	RKS.`{{ esu_id }}_amount_in_rub_without_vat`,
-	RKS.`{{ esu_id }}_amount_in_contract_currency_with_vat`,
-	RKS.`{{ esu_id }}_amount_in_contract_currency_without_vat`,
-    {% endfor -%}
-    {% else %}
-	RKS.`amount_in_rub_with_vat`,
-	RKS.`amount_in_rub_without_vat`,
-	RKS.`amount_in_contract_currency_with_vat`,
-	RKS.`amount_in_contract_currency_without_vat`,
+        {% for esu_id in esu_id_columns %}
+    RKS.`{{ esu_id }}_amount_in_rub_without_vat`,
+	RKS.`{{ esu_id }}_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},
     {% endif %}
-    {% endif %}  
-	{%- if order_id_field and date_field %}
-	{# #}
-    '<==RKS BA==>',
-	{%- endif %}    
+            {% if with_vat %}
+	RKS.`{{ esu_id }}_amount_in_rub_with_vat`,
+	RKS.`{{ esu_id }}_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+    RKS.`amount_in_rub_without_vat`,
+	RKS.`amount_in_contract_currency_without_vat`{% if date_field or with_vat %},
+    {% endif %}
+    {% if with_vat %}
+	RKS.`amount_in_rub_with_vat`,
+	RKS.`amount_in_contract_currency_with_vat`{% if date_field %},
+    {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% if date_field %}
+    '<==RKS BA==>'
+{% endif %}
 FROM
 	SVOD
-    {%- if order_id_field %}    
+    {% if order_id_field %}
 	LEFT JOIN RKS ON SVOD.`{{ container_field }}` = RKS.`SVOD.{{ container_field }}` AND SVOD.`{{ order_id_field }}` = RKS.`SVOD.{{ order_id_field }}`
     {% endif %}
 {% if date_field %}
@@ -62,39 +68,47 @@ SELECT
     BEFORE_AFTER.`B_подтянуто по`, BEFORE_AFTER.`B_date_diff`, BEFORE_AFTER.`B_min_Date_E`, BEFORE_AFTER. `B_service_details_order_id`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`B_{{ rks_field }}`,
-    {% endfor -%}
+    {% endfor %}
     {% if esu_id_columns %}
-    {% for esu_id in esu_id_columns %}
-	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_with_vat`,
+        {% for esu_id in esu_id_columns %}
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_contract_currency_with_vat`,
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_contract_currency_without_vat`,
-    {% endfor -%}
+                {% if with_vat %}
+	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_with_vat`,
+	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_contract_currency_with_vat`,
+                {% endif %}
+        {% endfor %}
     {% else %}
-	BEFORE_AFTER.`B_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`B_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`B_amount_in_contract_currency_with_vat`,
 	BEFORE_AFTER.`B_amount_in_contract_currency_without_vat`,
+        {% if with_vat %}
+	BEFORE_AFTER.`B_amount_in_rub_with_vat`,
+	BEFORE_AFTER.`B_amount_in_contract_currency_with_vat`,
+        {% endif %}
     {% endif %}
     {# #}
 	'<==B A==>',
     BEFORE_AFTER.`A_подтянуто по`, BEFORE_AFTER.`A_date_diff`, BEFORE_AFTER.`A_min_Date_E`, BEFORE_AFTER. `A_service_details_order_id`,
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`A_{{ rks_field }}`,
-    {% endfor -%}
+    {% endfor %}
     {% if esu_id_columns %}
-    {% for esu_id in esu_id_columns %}
-	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_with_vat`,
+        {% for esu_id in esu_id_columns %}
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_without_vat`,
+	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_without_vat`,
+                {% if with_vat %}
+	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_with_vat`,
-	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last %},{% endif %}
-    {% endfor -%}
+                {% endif %}
+        {% endfor %}
     {% else %}
-	BEFORE_AFTER.`A_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`A_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`A_amount_in_contract_currency_with_vat`,
 	BEFORE_AFTER.`A_amount_in_contract_currency_without_vat`
-    {% endif -%} 
+        {% if with_vat %}
+	BEFORE_AFTER.`A_amount_in_rub_with_vat`,
+	BEFORE_AFTER.`A_amount_in_contract_currency_with_vat`
+        {% endif %}
+    {% endif %}
 FROM
 	ANSWER
 	LEFT JOIN BEFORE_AFTER ON ANSWER.`{{ container_field }}` = BEFORE_AFTER.`SVOD.{{ container_field }}` AND ANSWER.`{{ date_field }}` = BEFORE_AFTER.`SVOD.{{ date_field }}`

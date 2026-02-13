@@ -1,13 +1,19 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod_oder_id_aravat",
+"with_vat": false,
 
-"container_field": "container_number",
+"before_fields": false,
 
-"order_id_field": "service_details_order_id`",
+"after_fields": true,
 
-"date_field": "`Дата оказания услуги`",
+"svod_table_name": "audit.svod",
+
+"container_field": "`Номер КТК`",
+
+"order_id_field": "`Заказ`",
+
+"date_field": "`Дата отпр.`",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -23,7 +29,7 @@
 
     "client_name",
 
-    "contract_number",
+    "--contract_number",
     "--service_provision_place_filial_name",
     "--service_provision_place_location_name",
     
@@ -46,8 +52,7 @@
 "esu_id_columns": [],
 
 "where_conditions": [
-    "date_end >= '2024-07-01'",
-    "dictGet('dict_location', 'country', service_provision_place_location_external_id) = '398'"
+    "date_end >= '2023-12-01'"
 ]
 
 }
