@@ -65,48 +65,51 @@ FROM
 ANSWER AS (
 SELECT
 	ANSWER.*,
+    {% if before_fields %}
     BEFORE_AFTER.`B_подтянуто по`, BEFORE_AFTER.`B_date_diff`, BEFORE_AFTER.`B_min_Date_E`, BEFORE_AFTER. `B_service_details_order_id`,
-    {% for rks_field in rks_fields if  "--" not in rks_field %}
+        {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`B_{{ rks_field }}`,
-    {% endfor %}
-    {% if esu_id_columns %}
-        {% for esu_id in esu_id_columns %}
+        {% endfor %}
+        {% if esu_id_columns %}
+            {% for esu_id in esu_id_columns %}
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_contract_currency_without_vat`,
                 {% if with_vat %}
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`B_{{ esu_id}}_amount_in_contract_currency_with_vat`,
                 {% endif %}
-        {% endfor %}
-    {% else %}
+            {% endfor %}
+        {% else %}
 	BEFORE_AFTER.`B_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`B_amount_in_contract_currency_without_vat`,
-        {% if with_vat %}
+            {% if with_vat %}
 	BEFORE_AFTER.`B_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`B_amount_in_contract_currency_with_vat`,
+            {% endif %}
         {% endif %}
     {% endif %}
-    {# #}
 	'<==B A==>',
+    {% if after_fields %}
     BEFORE_AFTER.`A_подтянуто по`, BEFORE_AFTER.`A_date_diff`, BEFORE_AFTER.`A_min_Date_E`, BEFORE_AFTER. `A_service_details_order_id`,
-    {% for rks_field in rks_fields if  "--" not in rks_field %}
+        {% for rks_field in rks_fields if  "--" not in rks_field %}
     BEFORE_AFTER.`A_{{ rks_field }}`,
-    {% endfor %}
-    {% if esu_id_columns %}
-        {% for esu_id in esu_id_columns %}
+        {% endfor %}
+        {% if esu_id_columns %}
+            {% for esu_id in esu_id_columns %}
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_without_vat`,
                 {% if with_vat %}
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`A_{{ esu_id}}_amount_in_contract_currency_with_vat`,
                 {% endif %}
-        {% endfor %}
-    {% else %}
+            {% endfor %}
+        {% else %}
 	BEFORE_AFTER.`A_amount_in_rub_without_vat`,
 	BEFORE_AFTER.`A_amount_in_contract_currency_without_vat`
-        {% if with_vat %}
+            {% if with_vat %}
 	BEFORE_AFTER.`A_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`A_amount_in_contract_currency_with_vat`
+            {% endif %}
         {% endif %}
     {% endif %}
 FROM
