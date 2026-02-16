@@ -49,10 +49,10 @@
     "--service_name"    
 ],
 
-"esu_id_columns": ["0.01.01.01", "0.01.02.01"],
+"esu_id_columns": ["0.02.05.08"],
 
 "where_conditions": [
-    "date_end >= '2023-12-01'"
+    "date_end >= '2024-12-01'"
 ]
 
 }

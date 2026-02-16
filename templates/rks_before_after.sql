@@ -3,7 +3,7 @@ argMaxIf(`{{ field }}`{{ "".rjust(max_column_len-field|length) }}, RKS.min_Date_
 {%- endmacro -%}
 
 {% macro after_field(field) %}
-argMinIf(`{{ field }}`{{ "".rjust(max_column_len-field|length) }}, RKS.min_Date_E, RKS.min_Date_E>=SVOD.`{{ date_field }}`) AS `B_{{ field }}`
+argMinIf(`{{ field }}`{{ "".rjust(max_column_len-field|length) }}, RKS.min_Date_E, RKS.min_Date_E>=SVOD.`{{ date_field }}`) AS `A_{{ field }}`
 {%- endmacro -%}
 
 {% macro rks_before_after(container_by_container_number) %}
