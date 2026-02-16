@@ -1,13 +1,13 @@
 {
 "user": "cvetkov_d",
 
+"svod_table_name": "audit.svod",
+
 "with_vat": false,
 
 "before_fields": true,
 
 "after_fields": true,
-
-"svod_table_name": "audit.svod",
 
 "container_field": "`Номер КТК`",
 
@@ -49,7 +49,7 @@
     "--service_name"    
 ],
 
-"esu_id_columns": [],
+"esu_id_columns": ["0.01.01.01", "0.01.02.01"],
 
 "where_conditions": [
     "date_end >= '2023-12-01'"

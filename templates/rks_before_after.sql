@@ -1,11 +1,10 @@
-{% macro before_cond(x) %}
-{% if x is string %}{{ "".rjust(max_column_len-x|length) }}, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`{% else %}{{ "".rjust(max_column_len-x) }}, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`{% endif %}
+{% macro before_field(field) %}
+argMaxIf(`{{ field }}`{{ "".rjust(max_column_len-field|length) }}, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`) AS `B_{{ field }}`
 {%- endmacro -%}
 
-{% macro after_cond(x) %}
-{% if x is string %}{{ "".rjust(max_column_len-x|length) }}, RKS.min_Date_E, RKS.min_Date_E>=SVOD.`{{ date_field }}`{% else %}{{ "".rjust(max_column_len-x) }}, RKS.min_Date_E, RKS.min_Date_E>=SVOD.`{{ date_field }}`{% endif %}
+{% macro after_field(field) %}
+argMinIf(`{{ field }}`{{ "".rjust(max_column_len-field|length) }}, RKS.min_Date_E, RKS.min_Date_E>=SVOD.`{{ date_field }}`) AS `B_{{ field }}`
 {%- endmacro -%}
-
 
 {% macro rks_before_after(container_by_container_number) %}
 {% if container_by_container_number %}
@@ -30,25 +29,25 @@ SELECT
     {% if before_fields %}
 	IF(`B_service_details_order_id`='', NULL, date_diff(DAY, SVOD.`{{ date_field }}`, `B_min_Date_E`)) AS `B_date_diff`,
 	IF(`B_service_details_order_id`='', NULL, argMaxIf(RKS.min_Date_E, RKS.min_Date_E, RKS.min_Date_E<=SVOD.`{{ date_field }}`)) AS `B_min_Date_E`,
-	argMaxIf(`service_details_order_id`{{ before_cond(x=24) }}) AS `B_service_details_order_id`,
+    {{ before_field(field='service_details_order_id') }},
         {% for rks_field in rks_fields if  "--" not in rks_field %}
-    argMaxIf(`{{ rks_field }}`{{ before_cond(x=rks_field) }}) AS `B_{{ rks_field }}`,
+    {{ before_field(field=rks_field) }},
         {% endfor %}
         {% if esu_id_columns %}
             {% for esu_id in esu_id_columns %}
-    argMaxIf(`{{ esu_id }}_amount_in_rub_without_vat`{{ before_cond(x=36) }}) AS `B_{{ esu_id }}_amount_in_rub_without_vat`,
-    argMaxIf(`{{ esu_id }}_amount_in_contract_currency_without_vat`{{ before_cond(x=50) }}) AS `B_{{ esu_id }}_amount_in_contract_currency_without_vat`,
+    {{ before_field(field=esu_id+'_amount_in_rub_without_vat') }},
+    {{ before_field(field=esu_id+'_amount_in_contract_currency_without_vat') }},
                 {% if with_vat %}
-    argMaxIf(`{{ esu_id }}_amount_in_rub_with_vat`{{ before_cond(x=36) }}) AS `B_{{ esu_id }}_amount_in_rub_with_vat`,
-    argMaxIf(`{{ esu_id }}_amount_in_contract_currency_with_vat`{{ before_cond(x=50) }}) AS `B_{{ esu_id }}_amount_in_contract_currency_with_vat`,
+    {{ before_field(field=esu_id+'_amount_in_rub_with_vat') }},
+    {{ before_field(field=esu_id+'_amount_in_contract_currency_with_vat') }},
                 {% endif %}
             {% endfor -%}
         {% else %}
-    argMaxIf(`amount_in_rub_without_vat`{{ before_cond(x=25) }}) AS `B_amount_in_rub_without_vat`,    
-    argMaxIf(`amount_in_contract_currency_without_vat`{{ before_cond(x=39) }}) AS `B_amount_in_contract_currency_without_vat`,
+    {{ before_field(field='amount_in_rub_without_vat') }},
+    {{ before_field(field='amount_in_contract_currency_without_vat') }},
             {% if with_vat %}
-    argMaxIf(`amount_in_rub_with_vat`{{ before_cond(x=25) }}) AS `B_amount_in_rub_with_vat`,
-    argMaxIf(`amount_in_contract_currency_with_vat`{{ before_cond(x=39) }}) AS `B_amount_in_contract_currency_with_vat`,
+    {{ before_field(field='amount_in_rub_with_vat') }},
+    {{ before_field(field='amount_in_contract_currency_with_vat') }},
             {% endif %}
         {% endif %}
 	{{ '-'*174 }}
@@ -56,25 +55,25 @@ SELECT
     {% if after_fields %}
 	IF(`A_service_details_order_id`='', NULL, date_diff(DAY, SVOD.`{{ date_field }}`, `A_min_Date_E`)) AS `A_date_diff`,
 	IF(`A_service_details_order_id`='', NULL, argMinIf(RKS.min_Date_E, RKS.min_Date_E, RKS.min_Date_E>=SVOD.`{{ date_field }}`)) AS `A_min_Date_E`,
-	argMinIf(`service_details_order_id`{{ after_cond(x=24) }}) AS `A_service_details_order_id`,
+    {{ after_field(field='service_details_order_id') }},
         {% for rks_field in rks_fields if  "--" not in rks_field %}
-    argMinIf(`{{ rks_field }}`{{ after_cond(x=rks_field) }}) AS `A_{{ rks_field }}`,
+    {{ after_field(field=rks_field) }},
         {% endfor %}
         {% if esu_id_columns %}
             {% for esu_id in esu_id_columns %}
-    argMinIf(`{{ esu_id }}_amount_in_rub_without_vat`{{ after_cond(x=36) }}) AS `A_{{ esu_id }}_amount_in_rub_without_vat`,
-    argMinIf(`{{ esu_id }}_amount_in_contract_currency_without_vat`{{ after_cond(x=50) }}) AS `A_{{ esu_id }}_amount_in_contract_currency_without_vat`,
+    {{ after_field(field=esu_id+'_amount_in_rub_without_vat') }},
+    {{ after_field(field=esu_id+'_amount_in_contract_currency_without_vat') }},
                 {% if with_vat %}
-    argMinIf(`{{ esu_id }}_amount_in_rub_with_vat`{{ after_cond(x=36) }}) AS `A_{{ esu_id }}_amount_in_rub_with_vat`,
-    argMinIf(`{{ esu_id }}_amount_in_contract_currency_with_vat`{{ after_cond(x=50) }}) AS `A_{{ esu_id }}_amount_in_contract_currency_with_vat`,
+    {{ after_field(field=esu_id+'_amount_in_rub_with_vat') }},
+    {{ after_field(field=esu_id+'_amount_in_contract_currency_with_vat') }},
                 {% endif %}
             {% endfor -%}
         {% else %}
-    argMinIf(`amount_in_rub_without_vat`{{ after_cond(x=25) }}) AS `A_amount_in_rub_without_vat`,    
-    argMinIf(`amount_in_contract_currency_without_vat`{{ after_cond(x=39) }}) AS `A_amount_in_contract_currency_without_vat`,
+    {{ after_field(field='amount_in_rub_without_vat') }},
+    {{ after_field(field='amount_in_contract_currency_without_vat') }},
             {% if with_vat %}
-    argMinIf(`amount_in_rub_with_vat`{{ after_cond(x=25) }}) AS `A_amount_in_rub_with_vat`,
-    argMinIf(`amount_in_contract_currency_with_vat`{{ after_cond(x=39) }}) AS `A_amount_in_contract_currency_with_vat`,
+    {{ after_field(field='amount_in_rub_with_vat') }},
+    {{ after_field(field='amount_in_contract_currency_with_vat') }},
             {% endif %}
         {% endif %}
 	{{ '-'*174 }}
