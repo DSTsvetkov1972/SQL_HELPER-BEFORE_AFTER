@@ -105,7 +105,7 @@ SELECT
             {% endfor %}
         {% else %}
 	BEFORE_AFTER.`A_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`A_amount_in_contract_currency_without_vat`
+	BEFORE_AFTER.`A_amount_in_contract_currency_without_vat`,
             {% if with_vat %}
 	BEFORE_AFTER.`A_amount_in_rub_with_vat`,
 	BEFORE_AFTER.`A_amount_in_contract_currency_with_vat`

@@ -1,19 +1,19 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.svod",
+"svod_table_name": "audit.subsidii_na_conteinerah",
 
-"with_vat": false,
+"with_vat": true,
 
 "before_fields": true,
 
 "after_fields": true,
 
-"container_field": "`Номер КТК`",
+"container_field": "`Номер контейнера`",
 
-"order_id_field": "`Заказ`",
+"order_id_field": "",
 
-"date_field": "`Дата отпр.`",
+"date_field": "`Дата начала аренды_`",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -49,10 +49,11 @@
     "--service_name"    
 ],
 
-"esu_id_columns": ["0.02.05.08"],
+"esu_id_columns": [],
 
 "where_conditions": [
-    "date_end >= '2024-12-01'"
+    "date_end >= '2023-12-01'",
+    "esu_id IN ('0.02.05.08')"
 ]
 
 }
