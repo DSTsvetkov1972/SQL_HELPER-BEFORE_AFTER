@@ -1,11 +1,11 @@
 {
 "user": "cvetkov_d",
 
-"svod_table_name": "audit.subsidii_na_conteinerah",
+"svod_table_name": "audit.svod",
 
-"with_vat": true,
+"with_vat": false,
 
-"before_fields": true,
+"before_fields": false,
 
 "after_fields": true,
 
@@ -49,11 +49,11 @@
     "--service_name"    
 ],
 
-"esu_id_columns": [],
+"esu_id_columns": ["0.02.05.08"],
 
 "where_conditions": [
     "date_end >= '2023-12-01'",
-    "esu_id IN ('0.02.05.08')"
+    "client_name = 'ООО \"НЕПТУН ЛОГИСТИКС РУС\"'"
 ]
 
 }

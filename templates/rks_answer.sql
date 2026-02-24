@@ -20,7 +20,7 @@ FROM
 	LEFT JOIN audit.{{ user }}_rks_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.container_number AND SVOD.`{{ order_id_field }}`=RKS_EQ.service_details_order_id	
 --) SELECT * FROM RKS
 )
-SELECT
+SELECT DISTINCT
     multiIf(
         `RKS_EQ.service_details_order_id`<>'', 'equipment_number',
         `RKS_CONT.service_details_order_id`<>'', 'container_number',

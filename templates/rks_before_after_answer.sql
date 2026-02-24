@@ -20,7 +20,7 @@ FROM
 	LEFT JOIN audit.{{ user }}_rks_before_after_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.`SVOD.{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_EQ.`SVOD.{{ date_field }}`
 --) SELECT * FROM RKS
 )
-SELECT
+SELECT DISTINCT
 	{{ '-'*230 }} 
 	{% if before_fields %}
     multiIf(
