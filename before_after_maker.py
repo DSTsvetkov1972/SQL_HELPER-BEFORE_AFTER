@@ -25,13 +25,24 @@ while True:
                 
                 if ("esu_id" in conditions['rks_fields'] or "service_name" in conditions['rks_fields']) and \
                     conditions['esu_id_columns']:
-                    print(Fore.RED + "Неправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если список esu_id_columns не пустой!" + Fore.RESET)
-                    pyperclip.copy("Запрос не сформирован!\nНеправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если список esu_id_columns не пустой!")
+
+                    wrn_msg = "Неправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если список esu_id_columns не пустой!"
+                    print(Fore.RED + wrn_msg + Fore.RESET)
+                    pyperclip.copy(f"Запрос не сформирован!\n{ wrn_msg }")
                     continue
 
+                if ("esu_id" in conditions['rks_fields'] or "service_name" in conditions['rks_fields']) and \
+                    conditions["esu_id_field"]:
+                    wrn_msg = "Неправильные параметры JSON: esu_id или service_name не могут быть заданы в качестве rks_fields, если esu_id_field не пустое!"
+                    print(Fore.RED + wrn_msg + Fore.RESET)
+                    pyperclip.copy(f"Запрос не сформирован!\n{ wrn_msg }")
+                    continue
+
+
                 if (not conditions['order_id_field'] and not conditions['date_field']):
-                    print(Fore.RED + "Неправильные параметры JSON: не задано ни поле order_id_field ни date_field!" + Fore.RESET)
-                    pyperclip.copy("Запрос не сформирован!\nНеправильные параметры JSON: не задано ни поле order_id_field ни date_field!")
+                    wrn_msg = "Неправильные параметры JSON: не задано ни поле order_id_field ни date_field!"
+                    print(Fore.RED + wrn_msg + Fore.RESET)
+                    pyperclip.copy("Запрос не сформирован!\n{ wrn_msg }")
                     continue
 
                 if conditions["svod_table_name"][:6] != 'audit.':
@@ -39,6 +50,7 @@ while True:
 
                 conditions["container_field"] = conditions["container_field"].replace("`","")
                 conditions["order_id_field"] = conditions["order_id_field"].replace("`","")
+                conditions["esu_id_field"] = conditions["esu_id_field"].replace("`","")                
                 conditions["date_field"] = conditions["date_field"].replace("`","")
                 conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']
 

@@ -1,7 +1,10 @@
-columns = "`SPRAVKA.Исходник`,`SPRAVKA.Строка в исходнике`,`SPRAVKA.Принадл.`,`SPRAVKA.Контейнера`,`SPRAVKA.Фут`,`SPRAVKA.Г/п`,`SPRAVKA.Cост`,`SPRAVKA.Вагон`,`SPRAVKA.Дата погрузки`,`SPRAVKA.Груз принят к перевозке`,`SPRAVKA.Отправка`,`SPRAVKA.Отправка_cleaned`,`SPRAVKA.Станция погрузки`,`SPRAVKA.Дор. погр.`,`SPRAVKA.Станция назначения`,`SPRAVKA.Дор. назн.`,`SPRAVKA.Конт. поезд`,`SPRAVKA.Наименование груза`,`SPRAVKA.Вес груза нетто(кг)`,`SPRAVKA.Код груза`,`SPRAVKA.Грузоотправитель`,`SPRAVKA.Грузополучатель`,`SPRAVKA.Код контрагента, фил.`,`SPRAVKA.Контрагент`,`SPRAVKA.Заказ`,`SPRAVKA.Страна отправления`,`SPRAVKA.Страна назначения`,`SPRAVKA.Арендатор вагона`,`SPRAVKA.Собственник вагона`,`SPRAVKA.Плательщик на территории РФ`,`SPRAVKA.Вид спецконтейнера`,`SPRAVKA.Место погрузки`,`SPRAVKA.Влад. ваг`,`SPRAVKA.Влад. конт`,`SPRAVKA.Операция`,`'<==SPRAVKA WR==>'`,`WR.Nom_vag`,`WR.Oper_date`,`WR.wg_statuses`,`'<==WR ETRAN==>'`,`ETRAN.invpayercode`,`ETRAN.invpayername`,`ETRAN.order_id`,`ETRAN.invnumber`,`ETRAN.Отправка_cleaned`,`ETRAN.contnumber`"
 
-columns_list = columns[1:-1].split("`,`")
+import time
+from plyer import notification
 
-columns_list = [f"`{ column }` AS `{ column.replace('ETRAN.', '')}`" for column in columns_list if 'ETRAN.' in column]
 
-print(', \n'.join(columns_list))
+notification.notify(
+    title="🔔 Сделайте перерыв!",
+    message="Работаете уже час — пора размяться.",
+    timeout=7
+)

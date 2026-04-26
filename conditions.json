@@ -1,19 +1,21 @@
 {
-"user": "cvetkov_d",
+"user": "ural_dopy_na_filial_",
 
-"svod_table_name": "audit.svod",
+"svod_table_name": "audit.ural_dopy_na_filial",
 
-"with_vat": false,
+"with_vat": true,
 
-"before_fields": false,
+"before_fields": true,
 
 "after_fields": true,
 
-"container_field": "`Номер контейнера`",
+"container_field": "nomer_kontejnera_cleaned",
 
-"order_id_field": "",
+"order_id_field": "nomer_zakaza_klienta_cleaned",
 
-"date_field": "`Дата начала аренды_`",
+"esu_id_field": "`nomer_esu_cleaned`",
+
+"date_field": "`data_(otchetnaya,_okazanie_uslugi)_`",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -49,11 +51,9 @@
     "--service_name"    
 ],
 
-"esu_id_columns": ["0.02.05.08"],
+"esu_id_columns": [],
 
 "where_conditions": [
-    "date_end >= '2023-12-01'",
-    "client_name = 'ООО \"НЕПТУН ЛОГИСТИКС РУС\"'"
+    "date_end >= '2023-01-01'"
 ]
-
 }

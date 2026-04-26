@@ -23,11 +23,11 @@ FROM
 	INNER JOIN SVOD ON container_number = SVOD.`{{ container_field }}`
 WHERE
     {% for where_condition in where_conditions %}
-    {%- if not loop.last or esu_id_columns%}
+        {%- if not loop.last or esu_id_columns%}
     {{ where_condition }} AND
-    {% else %}
+        {% else %}
     {{ where_condition }}
-    {% endif %}
+        {% endif %}
     {% endfor %}
     {% if esu_id_columns %}
     esu_id IN ('{{ "', '".join(esu_id_columns) }}')
@@ -36,7 +36,7 @@ GROUP BY
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}
-    {% if esu_id_columns %}
+    {% if esu_id_columns or esu_id_field %}
     `esu_id`,
     {% endif %}
     `service_details_order_id`,
@@ -51,27 +51,27 @@ HAVING
 )
 SELECT
 	min(Date_E) AS `min_Date_E`,
-	`service_details_order_id`,`container_number`,
+	`container_number`,`service_details_order_id`,{% if isu_id_field %}`esu_id`,{% endif %}
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}
     {% if esu_id_columns %}
-    {% for esu_id in esu_id_columns %}
+        {% for esu_id in esu_id_columns %}
     sumIf(amount_in_rub_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_without_vat`,
 	sumIf(amount_in_contract_currency_without_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_without_vat`{% if not loop.last or with_vat %},
-    {% endif %}
-    {% if with_vat %}
+            {% endif %}
+            {% if with_vat %}
 	sumIf(amount_in_rub_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_rub_with_vat`,
 	sumIf(amount_in_contract_currency_with_vat, esu_id='{{esu_id}}') AS `{{esu_id}}_amount_in_contract_currency_with_vat`{% if not loop.last%},{% endif %}
-    {% endif %}
-    {% endfor -%}    
+            {% endif %}
+        {% endfor -%}    
     {% else %}
     sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
 	sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`,
-    {% if with_vat %}    
+        {% if with_vat %}    
 	sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,
 	sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`
-    {% endif %}
+        {% endif %}
     {% endif %}    
 FROM
 	RKS
@@ -79,8 +79,8 @@ GROUP BY
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}
-    `service_details_order_id`,
-    `container_number`
+    `container_number`,
+    `service_details_order_id`
 {% else %}
 ) SELECT * FROM RKS 
 {% endif %}

@@ -3,13 +3,14 @@
 {% else %}
     min(date_end) AS min_Date_E,
 {% endif %}
-    service_details_order_id,
 {% if container_by_container_number %}
-    replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(upperUTF8(`service_details_container_number`),' ',''),'	',''), ' ', ''), '　', ''), '\n', ''), '\r', ''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C'), 'Н', 'H'), 'В', 'B'), 'Х', 'X') AS `container_number`,
+    replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(upperUTF8(`service_details_container_number`),' ',''),'	',''), ' ', ''), '　', ''), '\n', ''), '\r', ''),'Т','T'),'К','K'),'О','O'),'Е','E'),'Р','P'),'С','C'), 'Н', 'H'), 'В', 'B'), 'Х', 'X'
+    ) AS `container_number`,
 {% else %}
     equipment_number AS `container_number`,
 {% endif %}
-{% if 'esu_id' not in rks_fields and esu_id_columns %}
+    service_details_order_id,
+{% if ('esu_id' not in rks_fields and esu_id_columns) or esu_id_field %}
     esu_id,
 {% endif %}
     -------------------------------------------------------------------------------------------------------------- 

@@ -6,7 +6,7 @@ AS (
 
 WITH 
 SVOD AS (
-SELECT DISTINCT `{{ container_field }}`, `{{ date_field }}` FROM audit.{{ user }}_svod
+SELECT DISTINCT `{{ container_field }}`, {% if esu_id_field %} `{{ esu_id_field }}`,{% endif %} `{{ date_field }}` FROM audit.{{ user }}_svod
 --) SELECT * FROM SVOD
 ),
 RKS AS (
@@ -16,8 +16,16 @@ SELECT
 	RKS_EQ.*
 FROM
 	SVOD
-	LEFT JOIN audit.{{ user }}_rks_before_after_cont AS RKS_CONT ON SVOD.`{{ container_field }}`=RKS_CONT.`SVOD.{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_CONT.`SVOD.{{ date_field }}`
-	LEFT JOIN audit.{{ user }}_rks_before_after_eq AS RKS_EQ ON SVOD.`{{ container_field }}`=RKS_EQ.`SVOD.{{ container_field }}` AND SVOD.`{{ date_field }}`=RKS_EQ.`SVOD.{{ date_field }}`
+	LEFT JOIN audit.{{ user }}_rks_before_after_cont AS RKS_CONT ON
+		SVOD.`{{ container_field }}`=RKS_CONT.`SVOD.{{ container_field }}` AND
+		SVOD.`{{ date_field }}`=RKS_CONT.`SVOD.{{ date_field }}`{% if esu_id_field %} AND
+        SVOD.`{{ esu_id_field }}`=RKS_CONT.`SVOD.{{ esu_id_field }}`
+        {% endif %}
+	LEFT JOIN audit.{{ user }}_rks_before_after_eq AS RKS_EQ ON
+		SVOD.`{{ container_field }}`=RKS_EQ.`SVOD.{{ container_field }}` AND
+		SVOD.`{{ date_field }}`=RKS_EQ.`SVOD.{{ date_field }}`{% if esu_id_field %} AND
+        SVOD.`{{ esu_id_field }}`=RKS_EQ.`SVOD.{{ esu_id_field }}`
+        {% endif %}
 --) SELECT * FROM RKS
 )
 SELECT DISTINCT
@@ -100,7 +108,7 @@ SELECT DISTINCT
     	{% endif %}
 	{{ '-'*230 }} 		
     {% endif %}
-	`SVOD.{{ container_field }}`,`SVOD.{{ date_field }}`
+	`SVOD.{{ container_field }}`,`SVOD.{{ date_field }}`{% if esu_id_field %},`SVOD.{{ esu_id_field }}`{% endif%} 
 FROM
 	RKS
 

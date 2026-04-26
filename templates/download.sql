@@ -51,13 +51,16 @@ SELECT
         {% endif %}
     {% endif %}
 {% endif %}
-{% if date_field %}
+{% if order_id_field and date_field %}
     '<==RKS BA==>'
 {% endif %}
 FROM
 	SVOD
     {% if order_id_field %}
-	LEFT JOIN RKS ON SVOD.`{{ container_field }}` = RKS.`SVOD.{{ container_field }}` AND SVOD.`{{ order_id_field }}` = RKS.`SVOD.{{ order_id_field }}`
+	LEFT JOIN RKS ON
+        SVOD.`{{ container_field }}`=RKS.`SVOD.{{ container_field }}` AND{% if esu_id_field %} 
+        SVOD.`{{ esu_id_field }}`=RKS.`SVOD.{{ esu_id_field }}` AND{% endif %} 
+        SVOD.`{{ order_id_field }}`=RKS.`SVOD.{{ order_id_field }}`
     {% endif %}
 {% if date_field %}
 --) SELECT * FROM ANSWER
@@ -114,7 +117,10 @@ SELECT
     {% endif %}
 FROM
 	ANSWER
-	LEFT JOIN BEFORE_AFTER ON ANSWER.`{{ container_field }}` = BEFORE_AFTER.`SVOD.{{ container_field }}` AND ANSWER.`{{ date_field }}` = BEFORE_AFTER.`SVOD.{{ date_field }}`
+	LEFT JOIN BEFORE_AFTER ON
+        ANSWER.`{{ container_field }}`=BEFORE_AFTER.`SVOD.{{ container_field }}` AND{% if esu_id_field %} 
+        ANSWER.`{{ esu_id_field }}`=BEFORE_AFTER.`SVOD.{{ esu_id_field }}` AND{% endif %} 
+        ANSWER.`{{ date_field }}`=BEFORE_AFTER.`SVOD.{{ date_field }}`
 {% endif %}
 )
 SELECT * FROM ANSWER
