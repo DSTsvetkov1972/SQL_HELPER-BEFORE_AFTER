@@ -1,16 +1,20 @@
---download
+CREATE OR REPLACE TABLE audit.{{ project }}_answer
+ENGINE = MergeTree()
+ORDER BY tuple()
+AS (
+
 WITH
 SVOD AS (
-SELECT * FROM audit.{{ user }}_svod
+SELECT * FROM audit.{{ project }}_svod
 ),
 {% if order_id_field %}
 RKS AS (
-SELECT * FROM audit.{{ user }}_rks
+SELECT * FROM audit.{{ project }}_rks
 ),
 {% endif %}
 {% if date_field %}
 BEFORE_AFTER AS (
-SELECT * FROM audit.{{ user }}_rks_before_after
+SELECT * FROM audit.{{ project }}_rks_before_after
 ),
 {% endif %}
 ANSWER AS (
@@ -124,3 +128,8 @@ FROM
 {% endif %}
 )
 SELECT * FROM ANSWER
+
+)
+
+--download
+SELECT * FROM audit.{{ project }}_answer

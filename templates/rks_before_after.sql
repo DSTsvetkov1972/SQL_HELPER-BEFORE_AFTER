@@ -8,11 +8,11 @@ argMinIf(`{{ field }}`{{ "".rjust(max_column_len-field|length) }}, RKS.min_Date_
 
 {% macro rks_before_after(container_by_container_number) %}
 {% if container_by_container_number %}
--- SELECT * FROM audit.{{ user }}_rks_before_after_cont
-CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_cont
+-- SELECT * FROM audit.{{ project }}_rks_before_after_cont
+CREATE OR REPLACE TABLE audit.{{ project }}_rks_before_after_cont
 {% else %}
--- SELECT * FROM audit.{{ user }}_rks_before_after_eq
-CREATE OR REPLACE TABLE audit.{{ user }}_rks_before_after_eq
+-- SELECT * FROM audit.{{ project }}_rks_before_after_eq
+CREATE OR REPLACE TABLE audit.{{ project }}_rks_before_after_eq
 {% endif %}
 ENGINE = MergeTree()
 ORDER BY tuple()
@@ -20,7 +20,7 @@ AS (
 
 WITH 
 SVOD AS (
-	SELECT DISTINCT `{{ container_field }}`, {% if esu_id_field %} `{{ esu_id_field }}`, {% endif %} `{{ date_field }}` FROM audit.{{ user }}_svod WHERE `{{ container_field }}`<>'' AND `{{ date_field }}` IS NOT NULL
+	SELECT DISTINCT `{{ container_field }}`{% if esu_id_field %}, `{{ esu_id_field }}`{% endif %}, `{{ date_field }}` FROM audit.{{ project }}_svod WHERE `{{ container_field }}`<>'' AND `{{ date_field }}` IS NOT NULL
 --) SELECT * FROM SVOD
 ),
 RKS_BEFORE_AFTER AS (
@@ -81,9 +81,9 @@ SELECT
 	SVOD.`{{ container_field }}` AS `SVOD.{{ container_field }}`{% if esu_id_field %}, SVOD.`{{ esu_id_field }}` AS `SVOD.{{ esu_id_field }}`{% endif %}, SVOD.`{{ date_field }}` AS `SVOD.{{ date_field }}`
 FROM 
     {% if container_by_container_number %}
-	(SELECT * FROM audit.{{ user }}_rks_cont) AS RKS
+	(SELECT * FROM audit.{{ project }}_rks_cont) AS RKS
     {% else %}
-	(SELECT * FROM audit.{{ user }}_rks_eq) AS RKS    
+	(SELECT * FROM audit.{{ project }}_rks_eq) AS RKS    
     {% endif %}
 	RIGHT JOIN SVOD ON
         SVOD.`{{ container_field }}` = RKS.`container_number`{% if esu_id_field %} AND

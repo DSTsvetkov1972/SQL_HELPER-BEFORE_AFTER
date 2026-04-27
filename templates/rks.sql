@@ -1,10 +1,10 @@
 {% macro rks(container_by_container_number) %}
 {% if container_by_container_number %}
--- SELECT * FROM audit.{{ user }}_rks_cont
-CREATE OR REPLACE TABLE audit.{{ user }}_rks_cont
+-- SELECT * FROM audit.{{ project }}_rks_cont
+CREATE OR REPLACE TABLE audit.{{ project }}_rks_cont
 {% else %}
--- SELECT * FROM audit.{{ user }}_rks_eq
-CREATE OR REPLACE TABLE audit.{{ user }}_rks_eq
+-- SELECT * FROM audit.{{ project }}_rks_eq
+CREATE OR REPLACE TABLE audit.{{ project }}_rks_eq
 {% endif %}
 ENGINE = MergeTree()
 ORDER BY tuple()
@@ -12,7 +12,7 @@ AS (
 
 WITH 
 SVOD AS (
-	SELECT DISTINCT `{{ container_field }}` FROM audit.{{ user }}_svod WHERE `{{ container_field }}` <>''
+	SELECT DISTINCT `{{ container_field }}`{% if esu_id_field %}, `{{ esu_id_field }}`{% endif %} FROM audit.{{ project }}_svod WHERE `{{ container_field }}` <>''
 --) SELECT * FROM SVOD    
 ),
 RKS AS (
@@ -20,7 +20,9 @@ SELECT
     {% include 'block_select_fields.sql' %} 
 FROM 
 	(SELECT DISTINCT * FROM history.rks__directly WHERE client_number_id <> '0009309810' AND is_deleted=False) AS RD
-	INNER JOIN SVOD ON container_number = SVOD.`{{ container_field }}`
+	INNER JOIN SVOD ON
+        container_number = SVOD.`{{ container_field }}`{% if esu_id_field %} AND
+        esu_id = SVOD.`{{ esu_id_field }}`{% endif %} 
 WHERE
     {% for where_condition in where_conditions %}
         {%- if not loop.last or esu_id_columns%}

@@ -1,12 +1,12 @@
--- SELECT * FROM audit.{{ user }}_rks
-CREATE OR REPLACE TABLE audit.{{ user }}_rks
+-- SELECT * FROM audit.{{ project }}_rks
+CREATE OR REPLACE TABLE audit.{{ project }}_rks
 ENGINE = MergeTree()
 ORDER BY tuple()
 AS (
 
 WITH 
 SVOD AS (
-SELECT DISTINCT `{{ container_field }}`, `{{ order_id_field }}`{% if esu_id_field %}, `{{ esu_id_field }}` {% endif %} FROM audit.{{ user }}_svod
+SELECT DISTINCT `{{ container_field }}`, `{{ order_id_field }}`{% if esu_id_field %}, `{{ esu_id_field }}` {% endif %} FROM audit.{{ project }}_svod
 --) SELECT * FROM SVOD
 ),
 RKS AS (
@@ -16,12 +16,12 @@ SELECT
 	RKS_EQ.*
 FROM
 	SVOD
-	LEFT JOIN audit.{{ user }}_rks_cont AS RKS_CONT ON
+	LEFT JOIN audit.{{ project }}_rks_cont AS RKS_CONT ON
         SVOD.`{{ container_field }}`=RKS_CONT.container_number AND
         SVOD.`{{ order_id_field }}`=RKS_CONT.service_details_order_id{% if esu_id_field %} AND
         SVOD.`{{ esu_id_field }}`=RKS_CONT.esu_id
         {% endif %}
-	LEFT JOIN audit.{{ user }}_rks_eq AS RKS_EQ ON
+	LEFT JOIN audit.{{ project }}_rks_eq AS RKS_EQ ON
         SVOD.`{{ container_field }}`=RKS_EQ.container_number AND
         SVOD.`{{ order_id_field }}`=RKS_EQ.service_details_order_id{% if esu_id_field %} AND
         SVOD.`{{ esu_id_field }}`=RKS_CONT.esu_id
