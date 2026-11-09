@@ -64,6 +64,6 @@ SELECT DISTINCT
 FROM
 	RKS
 
-)
+);
 {# #}
 

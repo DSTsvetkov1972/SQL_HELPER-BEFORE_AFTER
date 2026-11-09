@@ -9,5 +9,5 @@ SELECT
 FROM
     {{ svod_table_name }} -- SELECT * FROM {{ svod_table_name }}
  
-)
+);
 {# #}

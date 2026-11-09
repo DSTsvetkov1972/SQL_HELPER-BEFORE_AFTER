@@ -112,5 +112,5 @@ SELECT DISTINCT
 FROM
 	RKS
 
-)
+);
 {# #}

@@ -22,7 +22,7 @@ FROM
 	(SELECT DISTINCT * FROM history.rks__directly WHERE client_number_id <> '0009309810' AND is_deleted=False) AS RD
 	INNER JOIN SVOD ON
         container_number = SVOD.`{{ container_field }}`{% if esu_id_field %} AND
-        esu_id = SVOD.`{{ esu_id_field }}`{% endif %} 
+        RD.esu_id = SVOD.`{{ esu_id_field }}`{% endif %} 
 WHERE
     {% for where_condition in where_conditions %}
         {%- if not loop.last or esu_id_columns%}
@@ -53,7 +53,10 @@ HAVING
 )
 SELECT
 	min(Date_E) AS `min_Date_E`,
-	`container_number`,`service_details_order_id`,{% if isu_id_field %}`esu_id`,{% endif %}
+	`container_number`,`service_details_order_id`,
+    {% if esu_id_field %}
+    `esu_id`,
+    {% endif %}
     {% for rks_field in rks_fields if  "--" not in rks_field %}
     `{{ rks_field }}`,
     {% endfor %}
@@ -82,12 +85,14 @@ GROUP BY
     `{{ rks_field }}`,
     {% endfor %}
     `container_number`,
-    `service_details_order_id`
+    `service_details_order_id`{% if esu_id_field %},
+    `esu_id`
+    {% endif %}
 {% else %}
 ) SELECT * FROM RKS 
 {% endif %}
 
-)
+);
 {% endmacro %}
 {{ rks(container_by_container_number=True) }}
 {# #}

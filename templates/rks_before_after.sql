@@ -87,13 +87,12 @@ FROM
     {% endif %}
 	RIGHT JOIN SVOD ON
         SVOD.`{{ container_field }}` = RKS.`container_number`{% if esu_id_field %} AND
-        SVOD.`{{ esu_id_field }}` = RKS.`esu_id`
-        {% endif %}
+        SVOD.`{{ esu_id_field }}` = RKS.`esu_id`{% endif %} 
 GROUP BY
-	 SVOD.`{{ container_field }}`{% if esu_id_field %}, SVOD.`{{ esu_id_field }}`{% endif %}, SVOD.`{{ date_field }}`
+	SVOD.`{{ container_field }}`{% if esu_id_field %}, SVOD.`{{ esu_id_field }}`{% endif %}, SVOD.`{{ date_field }}`
 ) SELECT * FROM RKS_BEFORE_AFTER
 
-)
+);
 {% endmacro %}
 {{ rks_before_after(container_by_container_number=True) }}
 {# #}

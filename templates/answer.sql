@@ -37,7 +37,7 @@ SELECT
     {% if esu_id_columns %}
         {% for esu_id in esu_id_columns %}
     RKS.`{{ esu_id }}_amount_in_rub_without_vat`,
-	RKS.`{{ esu_id }}_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},
+	RKS.`{{ esu_id }}_amount_in_contract_currency_without_vat`{% if date_field or with_vat or not loop.last %}, 
     {% endif %}
             {% if with_vat %}
 	RKS.`{{ esu_id }}_amount_in_rub_with_vat`,
@@ -57,7 +57,7 @@ SELECT
 {% endif %}
 {% if order_id_field and date_field %}
     '<==RKS BA==>'
-{% endif %}
+{% endif %} 
 FROM
 	SVOD
     {% if order_id_field %}
@@ -129,7 +129,8 @@ FROM
 )
 SELECT * FROM ANSWER
 
-)
+);
 
 --download
-SELECT * FROM audit.{{ project }}_answer
+--SELECT count() FROM audit.{{ project }}_answer
+SELECT * FROM audit.{{ project }}_answer;

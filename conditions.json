@@ -1,21 +1,21 @@
 {
-"project": "ural_dopy_na_filial_",
+"project": "okt_logistika_terminal_0_02_03_19",
 
-"svod_table_name": "audit.ural_dopy_na_filial",
+"svod_table_name": "audit.okt_logistika_terminal_0_02_03_19",
 
-"with_vat": true,
+"with_vat": false,
 
 "before_fields": true,
 
 "after_fields": true,
 
-"container_field": "nomer_kontejnera_cleaned",
+"container_field": "`SHAPKA.№ контейнера`",
 
-"order_id_field": "nomer_zakaza_klienta_cleaned",
+"order_id_field": "`SHAPKA.№ заказа`",
 
-"esu_id_field": "`nomer_esu_cleaned`",
+"esu_id_field": "",
 
-"date_field": "`data_(otchetnaya,_okazanie_uslugi)_`",
+"date_field": "middle_date",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -26,19 +26,19 @@
     "--items_etsng_id",
     "--items_gng_id",
 
-    "--provider_name",
+    "provider_name",
     "--service_details_wagon_number",
 
-    "client_name",
+    "--client_name",
 
     "--contract_number",
     "--service_provision_place_filial_name",
-    "--service_provision_place_location_name",
+    "service_provision_place_location_name",
     
     "--service_details_points_from_catalog_id",
     "--service_details_points_to_catalog_id",
-    "service_details_points_from_catalog_name",
-    "service_details_points_to_catalog_name",
+    "--service_details_points_from_catalog_name",
+    "--service_details_points_to_catalog_name",
 
     "--service_details_points_from_station_id",
     "--service_details_points_to_station_id",
@@ -51,9 +51,12 @@
     "--service_name"    
 ],
 
-"esu_id_columns": [],
+"esu_id_columns": [
+    "0.02.03.19"
+],
 
 "where_conditions": [
-    "date_end >= '2023-01-01'"
+    "date_end >= '2024-07-01'",
+    "provider_name='АО \"ЛОГИСТИКА-ТЕРМИНАЛ\"'"
 ]
 }
