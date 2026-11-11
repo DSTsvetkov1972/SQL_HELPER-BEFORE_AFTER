@@ -1,7 +1,7 @@
 {
-"project": "okt_logistika_terminal_0_02_03_19",
+"project": "dvost_vsk_peremeschenie_dlya_osmotra",
 
-"svod_table_name": "audit.okt_logistika_terminal_0_02_03_19",
+"svod_table_name": "audit.dvost_vsk_peremeschenie_dlya_osmotra_0",
 
 "with_vat": false,
 
@@ -9,13 +9,13 @@
 
 "after_fields": true,
 
-"container_field": "`SHAPKA.№ контейнера`",
+"container_field": "`№ контейнера`",
 
-"order_id_field": "`SHAPKA.№ заказа`",
+"order_id_field": "",
 
 "esu_id_field": "",
 
-"date_field": "middle_date",
+"date_field": "Дата работы",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -52,11 +52,11 @@
 ],
 
 "esu_id_columns": [
-    "0.02.03.19"
+    "0.02.03.10", "0.02.03.14", "0.02.03.08", "0.02.03.21"
 ],
 
 "where_conditions": [
     "date_end >= '2024-07-01'",
-    "provider_name='АО \"ЛОГИСТИКА-ТЕРМИНАЛ\"'"
+    "service_provision_place_location_name='Находка-Восточная, станция'"
 ]
 }

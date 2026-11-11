@@ -35,19 +35,27 @@ SELECT
         {% endfor %}
         {% if esu_id_columns %}
             {% for esu_id in esu_id_columns %}
-    {{ before_field(field=esu_id+'_amount_in_rub_without_vat') }},
-    {{ before_field(field=esu_id+'_amount_in_contract_currency_without_vat') }},
+    {{ before_field(field=esu_id+'_sum_amount_in_rub_without_vat') }},
+    {{ before_field(field=esu_id+'_arr_amount_in_rub_without_vat') }},    
+    {{ before_field(field=esu_id+'_sum_amount_in_contract_currency_without_vat') }},
+    {{ before_field(field=esu_id+'_arr_amount_in_contract_currency_without_vat') }},    
                 {% if with_vat %}
-    {{ before_field(field=esu_id+'_amount_in_rub_with_vat') }},
-    {{ before_field(field=esu_id+'_amount_in_contract_currency_with_vat') }},
+    {{ before_field(field=esu_id+'_sum_amount_in_rub_with_vat') }},
+    {{ before_field(field=esu_id+'_arr_amount_in_rub_with_vat') }},    
+    {{ before_field(field=esu_id+'_sum_amount_in_contract_currency_with_vat') }},
+    {{ before_field(field=esu_id+'_arr_amount_in_contract_currency_with_vat') }},    
                 {% endif %}
             {% endfor -%}
         {% else %}
-    {{ before_field(field='amount_in_rub_without_vat') }},
-    {{ before_field(field='amount_in_contract_currency_without_vat') }},
+    {{ before_field(field='sum_amount_in_rub_without_vat') }},
+    {{ before_field(field='arr_amount_in_rub_without_vat') }},    
+    {{ before_field(field='sum_amount_in_contract_currency_without_vat') }},
+    {{ before_field(field='arr_amount_in_contract_currency_without_vat') }},    
             {% if with_vat %}
-    {{ before_field(field='amount_in_rub_with_vat') }},
-    {{ before_field(field='amount_in_contract_currency_with_vat') }},
+    {{ before_field(field='sum_amount_in_rub_with_vat') }},
+    {{ before_field(field='arr_amount_in_rub_with_vat') }},    
+    {{ before_field(field='sum_amount_in_contract_currency_with_vat') }},
+    {{ before_field(field='arr_amount_in_contract_currency_with_vat') }},    
             {% endif %}
         {% endif %}
 	{{ '-'*174 }}
@@ -61,19 +69,27 @@ SELECT
         {% endfor %}
         {% if esu_id_columns %}
             {% for esu_id in esu_id_columns %}
-    {{ after_field(field=esu_id+'_amount_in_rub_without_vat') }},
-    {{ after_field(field=esu_id+'_amount_in_contract_currency_without_vat') }},
+    {{ after_field(field=esu_id+'_sum_amount_in_rub_without_vat') }},
+    {{ after_field(field=esu_id+'_arr_amount_in_rub_without_vat') }},    
+    {{ after_field(field=esu_id+'_sum_amount_in_contract_currency_without_vat') }},
+    {{ after_field(field=esu_id+'_arr_amount_in_contract_currency_without_vat') }},    
                 {% if with_vat %}
-    {{ after_field(field=esu_id+'_amount_in_rub_with_vat') }},
-    {{ after_field(field=esu_id+'_amount_in_contract_currency_with_vat') }},
+    {{ after_field(field=esu_id+'_sum_amount_in_rub_with_vat') }},
+    {{ after_field(field=esu_id+'_arr_amount_in_rub_with_vat') }},    
+    {{ after_field(field=esu_id+'_sum_amount_in_contract_currency_with_vat') }},
+    {{ after_field(field=esu_id+'_arr_amount_in_contract_currency_with_vat') }},    
                 {% endif %}
             {% endfor -%}
         {% else %}
-    {{ after_field(field='amount_in_rub_without_vat') }},
-    {{ after_field(field='amount_in_contract_currency_without_vat') }},
+    {{ after_field(field='sum_amount_in_rub_without_vat') }},
+    {{ after_field(field='arr_amount_in_rub_without_vat') }},    
+    {{ after_field(field='sum_amount_in_contract_currency_without_vat') }},
+    {{ after_field(field='arr_amount_in_contract_currency_without_vat') }},    
             {% if with_vat %}
-    {{ after_field(field='amount_in_rub_with_vat') }},
-    {{ after_field(field='amount_in_contract_currency_with_vat') }},
+    {{ after_field(field='sum_amount_in_rub_with_vat') }},
+    {{ after_field(field='arr_amount_in_rub_with_vat') }},    
+    {{ after_field(field='sum_amount_in_contract_currency_with_vat') }},
+    {{ after_field(field='arr_amount_in_contract_currency_with_vat') }},    
             {% endif %}
         {% endif %}
 	{{ '-'*174 }}

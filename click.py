@@ -100,13 +100,13 @@ def get_svod_table_columns(svod_table_info, container_field='', order_field=''):
 def get_max_column_len(svod_table_columns, date_field, with_vat, esu_id_columns):
 
     if esu_id_columns and date_field:
-        svod_table_columns.append('A_0.01.01.01_amount_in_contract_currency_without_vat')
+        svod_table_columns.append('A_0.01.01.01_sum_amount_in_contract_currency_without_vat')
     elif esu_id_columns and not date_field:
-        svod_table_columns.append('A_0.01.01.01_amount_in_contract_currency_without_vat')
+        svod_table_columns.append('A_0.01.01.01_sum_amount_in_contract_currency_without_vat')
     elif not esu_id_columns and date_field:
-        svod_table_columns.append('A_amount_in_contract_currency_without_vat')
+        svod_table_columns.append('A_sum_amount_in_contract_currency_without_vat')
     else:
-        svod_table_columns.append('amount_in_contract_currency_without_vat')
+        svod_table_columns.append('sum_amount_in_contract_currency_without_vat')
 
     lengths = [len(column) for column in svod_table_columns]
     return max(lengths)

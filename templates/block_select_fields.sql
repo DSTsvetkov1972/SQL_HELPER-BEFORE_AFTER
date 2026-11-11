@@ -44,7 +44,11 @@
 {% endif %}
 {% endfor %}
     --------------------------------------------------------------------------------------------------------------  
-    sum(amount_in_rub_without_vat) AS `amount_in_rub_without_vat`,
-    sum(amount_in_contract_currency_without_vat) AS `amount_in_contract_currency_without_vat`,
-    sum(amount_in_rub_with_vat) AS `amount_in_rub_with_vat`,
-    sum(amount_in_contract_currency_with_vat) AS `amount_in_contract_currency_with_vat`  
+    sum(amount_in_rub_without_vat) AS `sum_amount_in_rub_without_vat`,
+    arrayStringConcat(groupArray(amount_in_rub_without_vat), '; ') AS `arr_amount_in_rub_without_vat`,    
+    sum(amount_in_contract_currency_without_vat) AS `sum_amount_in_contract_currency_without_vat`,
+    arrayStringConcat(groupArray(amount_in_contract_currency_without_vat), '; ') AS `arr_amount_in_contract_currency_without_vat`,    
+    sum(amount_in_rub_with_vat) AS `sum_amount_in_rub_with_vat`,
+    arrayStringConcat(groupArray(amount_in_rub_with_vat), '; ') AS `arr_amount_in_rub_with_vat`,   
+    sum(amount_in_contract_currency_with_vat) AS `sum_amount_in_contract_currency_with_vat`, 
+    arrayStringConcat(groupArray(amount_in_contract_currency_with_vat), '; ') AS `arr_amount_in_contract_currency_with_vat`  

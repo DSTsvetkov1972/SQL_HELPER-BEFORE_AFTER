@@ -11,7 +11,7 @@ init()
 while True:
 
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
-    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2026-02-13-17:36 *" + Fore.RESET)
+    print(Fore.MAGENTA + "* BEFORE_AFTER_MAKER v.2026-11-11-16:02 *" + Fore.RESET)
     print(Fore.MAGENTA + "="*41 + Fore.RESET)    
 
     if os.path.exists(os.path.join(os.getcwd(), 'conditions.json')):
