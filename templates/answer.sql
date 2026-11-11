@@ -19,7 +19,7 @@ SELECT * FROM audit.{{ project }}_rks_before_after
 {% endif %}
 ANSWER AS (
 SELECT
-	SVOD.*,
+    SVOD.*,
 {% if order_id_field %}
     '<==SVOD RKS==>',
 {% else %}
@@ -37,20 +37,20 @@ SELECT
     {% if esu_id_columns %}
         {% for esu_id in esu_id_columns %}
     RKS.`{{ esu_id }}_sum_amount_in_rub_without_vat`,
-	RKS.`{{ esu_id }}_sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat or not loop.last %}, 
+    RKS.`{{ esu_id }}_sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat or not loop.last %},
     {% endif %}
             {% if with_vat %}
-	RKS.`{{ esu_id }}_sum_amount_in_rub_with_vat`,
-	RKS.`{{ esu_id }}_sum_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
+    RKS.`{{ esu_id }}_sum_amount_in_rub_with_vat`,
+    RKS.`{{ esu_id }}_sum_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
             {% endif %}
         {% endfor %}
     {% else %}
     RKS.`sum_amount_in_rub_without_vat`,
-	RKS.`sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},
+    RKS.`sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},
     {% endif %}
     {% if with_vat %}
-	RKS.`sum_amount_in_rub_with_vat`,
-	RKS.`sum_amount_in_contract_currency_with_vat`{% if date_field %},
+    RKS.`sum_amount_in_rub_with_vat`,
+    RKS.`sum_amount_in_contract_currency_with_vat`{% if date_field %},
     {% endif %}
         {% endif %}
     {% endif %}
@@ -59,10 +59,10 @@ SELECT
     '<==RKS BA==>'
 {% endif %} 
 FROM
-	SVOD
+    SVOD
     {% if order_id_field %}
-	LEFT JOIN RKS ON
-        SVOD.`{{ container_field }}`=RKS.`SVOD.{{ container_field }}` AND{% if esu_id_field %} 
+    LEFT JOIN RKS ON
+        SVOD.`{{ container_field }}`=RKS.`SVOD.{{ container_field }}` AND{% if esu_id_field %}
         SVOD.`{{ esu_id_field }}`=RKS.`SVOD.{{ esu_id_field }}` AND{% endif %} 
         SVOD.`{{ order_id_field }}`=RKS.`SVOD.{{ order_id_field }}`
     {% endif %}
@@ -71,7 +71,7 @@ FROM
 ),
 ANSWER AS (
 SELECT
-	ANSWER.*,
+    ANSWER.*,
     {% if before_fields %}
     BEFORE_AFTER.`B_подтянуто по`, BEFORE_AFTER.`B_date_diff`, BEFORE_AFTER.`B_min_Date_E`, BEFORE_AFTER. `B_service_details_order_id`,
         {% for rks_field in rks_fields if  "--" not in rks_field %}
@@ -79,31 +79,47 @@ SELECT
         {% endfor %}
         {% if esu_id_columns %}
             {% for esu_id in esu_id_columns %}
-	BEFORE_AFTER.`B_{{ esu_id}}_sum_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`B_{{ esu_id}}_arr_amount_in_rub_without_vat`,    
-	BEFORE_AFTER.`B_{{ esu_id}}_sum_amount_in_contract_currency_without_vat`,
-	BEFORE_AFTER.`B_{{ esu_id}}_arr_amount_in_contract_currency_without_vat`,    
+    BEFORE_AFTER.`B_{{ esu_id }}_sum_amount_in_rub_without_vat`,
+                {% if arr_fields %}
+    BEFORE_AFTER.`B_{{ esu_id }}_arr_amount_in_rub_without_vat`,
+                {% endif %}
+    BEFORE_AFTER.`B_{{ esu_id }}_sum_amount_in_contract_currency_without_vat`,
+                {% if arr_fields %}
+    BEFORE_AFTER.`B_{{ esu_id }}_arr_amount_in_contract_currency_without_vat`,
+                {% endif %}
                 {% if with_vat %}
-	BEFORE_AFTER.`B_{{ esu_id}}_sum_amount_in_rub_with_vat`,
-	BEFORE_AFTER.`B_{{ esu_id}}_arr_amount_in_rub_with_vat`,    
-	BEFORE_AFTER.`B_{{ esu_id}}_sum_amount_in_contract_currency_with_vat`,
-	BEFORE_AFTER.`B_{{ esu_id}}_arr_amount_in_contract_currency_with_vat`,    
+    BEFORE_AFTER.`B_{{ esu_id }}_sum_amount_in_rub_with_vat`,
+                    {% if arr_fields %}
+    BEFORE_AFTER.`B_{{ esu_id }}_arr_amount_in_rub_with_vat`,
+                    {% endif %}
+    BEFORE_AFTER.`B_{{ esu_id }}_sum_amount_in_contract_currency_with_vat`,
+                    {% if arr_fields %}    
+    BEFORE_AFTER.`B_{{ esu_id }}_arr_amount_in_contract_currency_with_vat`,
+                    {% endif %}    
                 {% endif %}
             {% endfor %}
         {% else %}
-	BEFORE_AFTER.`B_sum_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`B_arr_amount_in_rub_without_vat`,    
-	BEFORE_AFTER.`B_sum_amount_in_contract_currency_without_vat`,
-	BEFORE_AFTER.`B_arr_amount_in_contract_currency_without_vat`,    
+    BEFORE_AFTER.`B_sum_amount_in_rub_without_vat`,
+            {% if arr_fields %}
+    BEFORE_AFTER.`B_arr_amount_in_rub_without_vat`,
+            {% endif %}
+    BEFORE_AFTER.`B_sum_amount_in_contract_currency_without_vat`,
+            {% if arr_fields %}
+    BEFORE_AFTER.`B_arr_amount_in_contract_currency_without_vat`,
+            {% endif %}
             {% if with_vat %}
-	BEFORE_AFTER.`B_sum_amount_in_rub_with_vat`,
-	BEFORE_AFTER.`B_arr_amount_in_rub_with_vat`,    
-	BEFORE_AFTER.`B_sum_amount_in_contract_currency_with_vat`,
-	BEFORE_AFTER.`B_arr_amount_in_contract_currency_with_vat`,    
+    BEFORE_AFTER.`B_sum_amount_in_rub_with_vat`,
+                {% if arr_fields %}
+    BEFORE_AFTER.`B_arr_amount_in_rub_with_vat`,
+                {% endif %}
+    BEFORE_AFTER.`B_sum_amount_in_contract_currency_with_vat`,
+                {% if arr_fields %}  
+    BEFORE_AFTER.`B_arr_amount_in_contract_currency_with_vat`,
+                {% endif %}
             {% endif %}
         {% endif %}
     {% endif %}
-	'<==B A==>',
+    '<==B A==>',
     {% if after_fields %}
     BEFORE_AFTER.`A_подтянуто по`, BEFORE_AFTER.`A_date_diff`, BEFORE_AFTER.`A_min_Date_E`, BEFORE_AFTER. `A_service_details_order_id`,
         {% for rks_field in rks_fields if  "--" not in rks_field %}
@@ -111,35 +127,53 @@ SELECT
         {% endfor %}
         {% if esu_id_columns %}
             {% for esu_id in esu_id_columns %}
-	BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_rub_without_vat`,    
-	BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_contract_currency_without_vat`,
-	BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_contract_currency_without_vat`,    
+    BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_rub_without_vat`,
+                {% if arr_fields %}
+    BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_rub_without_vat`,
+                {% endif %}
+    BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_contract_currency_without_vat`,
+                {% if arr_fields %}
+    BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_contract_currency_without_vat`,
+                {% endif %}
                 {% if with_vat %}
-	BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_rub_with_vat`,
-	BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_rub_with_vat`,    
-	BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_contract_currency_with_vat`,
-	BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_contract_currency_with_vat`,    
+    BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_rub_with_vat`,
+                    {% if arr_fields %}
+    BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_rub_with_vat`,
+                    {% endif %}
+    BEFORE_AFTER.`A_{{ esu_id}}_sum_amount_in_contract_currency_with_vat`,
+                    {% if arr_fields %}
+    BEFORE_AFTER.`A_{{ esu_id}}_arr_amount_in_contract_currency_with_vat`,
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         {% else %}
-	BEFORE_AFTER.`A_sum_amount_in_rub_without_vat`,
-	BEFORE_AFTER.`A_arr_amount_in_rub_without_vat`,    
-	BEFORE_AFTER.`A_sum_amount_in_contract_currency_without_vat`,
-	BEFORE_AFTER.`A_arr_amount_in_contract_currency_without_vat`,    
+    BEFORE_AFTER.`A_sum_amount_in_rub_without_vat`,
+            {% if arr_fields %}
+    BEFORE_AFTER.`A_arr_amount_in_rub_without_vat`,
+            {% endif %}
+    BEFORE_AFTER.`A_sum_amount_in_contract_currency_without_vat`,
+            {% if arr_fields %}
+    BEFORE_AFTER.`A_arr_amount_in_contract_currency_without_vat`,
+            {% endif %}
             {% if with_vat %}
-	BEFORE_AFTER.`A_sum_amount_in_rub_with_vat`,
-	BEFORE_AFTER.`A_arr_amount_in_rub_with_vat`,    
-	BEFORE_AFTER.`A_sum_amount_in_contract_currency_with_vat`,
-	BEFORE_AFTER.`A_arr_amount_in_contract_currency_with_vat`    
+    BEFORE_AFTER.`A_sum_amount_in_rub_with_vat`,
+                {% if arr_fields %}  
+    BEFORE_AFTER.`A_arr_amount_in_rub_with_vat`,
+                {% endif %}
+    BEFORE_AFTER.`A_sum_amount_in_contract_currency_with_vat`,
+                {% if arr_fields %}
+    BEFORE_AFTER.`A_arr_amount_in_contract_currency_with_vat`
+                {% endif %}
             {% endif %}
         {% endif %}
     {% endif %}
 FROM
-	ANSWER
-	LEFT JOIN BEFORE_AFTER ON
-        ANSWER.`{{ container_field }}`=BEFORE_AFTER.`SVOD.{{ container_field }}` AND{% if esu_id_field %} 
-        ANSWER.`{{ esu_id_field }}`=BEFORE_AFTER.`SVOD.{{ esu_id_field }}` AND{% endif %} 
+    ANSWER
+    LEFT JOIN BEFORE_AFTER ON
+        ANSWER.`{{ container_field }}`=BEFORE_AFTER.`SVOD.{{ container_field }}` AND
+        {% if esu_id_field %}
+        ANSWER.`{{ esu_id_field }}`=BEFORE_AFTER.`SVOD.{{ esu_id_field }}` AND
+        {% endif %}
         ANSWER.`{{ date_field }}`=BEFORE_AFTER.`SVOD.{{ date_field }}`
 {% endif %}
 )

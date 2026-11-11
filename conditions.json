@@ -9,6 +9,8 @@
 
 "after_fields": true,
 
+"arr_fields": false,
+
 "container_field": "`№ контейнера`",
 
 "order_id_field": "",
