@@ -55,7 +55,8 @@ while True:
                 conditions["rks_fields"] = [rks_field for rks_field in conditions["rks_fields"] if rks_field[:2]!='--']
 
                 table_info = get_table_info(
-                    conditions["svod_table_name"])
+                     conditions["svod_table_name"])
+                # table_info = conditions["rks_fields"]
                 
                 conditions['svod_table_columns'] = get_svod_table_columns(
                     table_info,
@@ -63,7 +64,7 @@ while True:
                     conditions["order_id_field"])
 
                 conditions['max_column_len'] = get_max_column_len(
-                    table_info,
+                    conditions["rks_fields"],
                     conditions["date_field"],
                     conditions["with_vat"],
                     conditions["esu_id_columns"])

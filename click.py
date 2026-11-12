@@ -98,6 +98,7 @@ def get_svod_table_columns(svod_table_info, container_field='', order_field=''):
 
 
 def get_max_column_len(svod_table_columns, date_field, with_vat, esu_id_columns):
+    svod_table_columns = svod_table_columns[:]
 
     if esu_id_columns and date_field:
         svod_table_columns.append('A_0.01.01.01_sum_amount_in_contract_currency_without_vat')
@@ -108,17 +109,17 @@ def get_max_column_len(svod_table_columns, date_field, with_vat, esu_id_columns)
     else:
         svod_table_columns.append('sum_amount_in_contract_currency_without_vat')
 
+    # for i in svod_table_columns:
+    #     print(i, len(i))        
+
     lengths = [len(column) for column in svod_table_columns]
     return max(lengths)
 
 
 if __name__ == '__main__':
-    table_info = get_table_info('audit.svod')
+    c = ['provider_name', 'service_provision_place_location_name']
+    print(get_max_column_len(c, 1,1,1))
 
-    print(table_info)
-    
-    table_columns = get_svod_table_columns(table_info)
-    print(table_columns)
 
 
 

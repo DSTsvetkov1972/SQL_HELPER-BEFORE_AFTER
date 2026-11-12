@@ -38,7 +38,7 @@ SELECT
         {% for esu_id in esu_id_columns %}
     RKS.`{{ esu_id }}_sum_amount_in_rub_without_vat`,
             {% if arr_fields %}
-    RKS.`{{ esu_id }}_arr_amount_in_rub_without_vat`,    
+    RKS.`{{ esu_id }}_arr_amount_in_rub_without_vat`,
             {% endif %}
     RKS.`{{ esu_id }}_sum_amount_in_contract_currency_without_vat`{% if not arr_fields or date_field or with_vat or not loop.last %},{% endif %}
             {% if arr_fields %}            
@@ -51,7 +51,7 @@ SELECT
                 {% endif %}
     RKS.`{{ esu_id }}_sum_amount_in_contract_currency_with_vat`{% if date_field or arr_fields %},{% endif %}
                 {% if arr_fields %}    
-    RKS.`{{ esu_id }}_arr_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}    
+    RKS.`{{ esu_id }}_arr_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -60,24 +60,24 @@ SELECT
     RKS.`sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},{% endif %}
         {% if with_vat %}
     RKS.`sum_amount_in_rub_with_vat`,
-            {% if arr_fields %}    
+            {% if arr_fields %}
     RKS.`arr_amount_in_rub_with_vat`,
             {% endif %}
     RKS.`sum_amount_in_contract_currency_with_vat`{% if date_field or arr_fields %},{% endif %}
-            {% if arr_fields %}      
+            {% if arr_fields %}
     RKS.`arr_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
             {% endif %}
         {% endif %}
     {% endif %}
-{% endif %}
+{% endif %} 
 {% if order_id_field and date_field %}
     '<==RKS BA==>'
-{% endif %} 
+{% endif %}
 FROM
     SVOD
     {% if order_id_field %}
     LEFT JOIN RKS ON
-        SVOD.`{{ container_field }}`=RKS.`SVOD.{{ container_field }}` AND{% if esu_id_field %}
+        SVOD.`{{ container_field }}`=RKS.`SVOD.{{ container_field }}` AND{% if esu_id_field %} 
         SVOD.`{{ esu_id_field }}`=RKS.`SVOD.{{ esu_id_field }}` AND{% endif %} 
         SVOD.`{{ order_id_field }}`=RKS.`SVOD.{{ order_id_field }}`
     {% endif %}
@@ -108,9 +108,9 @@ SELECT
     BEFORE_AFTER.`B_{{ esu_id }}_arr_amount_in_rub_with_vat`,
                     {% endif %}
     BEFORE_AFTER.`B_{{ esu_id }}_sum_amount_in_contract_currency_with_vat`,
-                    {% if arr_fields %}    
+                    {% if arr_fields %}
     BEFORE_AFTER.`B_{{ esu_id }}_arr_amount_in_contract_currency_with_vat`,
-                    {% endif %}    
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         {% else %}
@@ -172,7 +172,7 @@ SELECT
             {% endif %}
             {% if with_vat %}
     BEFORE_AFTER.`A_sum_amount_in_rub_with_vat`,
-                {% if arr_fields %}  
+                {% if arr_fields %}
     BEFORE_AFTER.`A_arr_amount_in_rub_with_vat`,
                 {% endif %}
     BEFORE_AFTER.`A_sum_amount_in_contract_currency_with_vat`,
