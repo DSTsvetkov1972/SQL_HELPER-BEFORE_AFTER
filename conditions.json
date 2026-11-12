@@ -1,7 +1,7 @@
 {
-"project": "dvost_vsk_peremeschenie_dlya_osmotra",
+"project": "dvst_neuregulirovannye_hraneneie",
 
-"svod_table_name": "audit.dvost_vsk_peremeschenie_dlya_osmotra_0",
+"svod_table_name": "audit.dvst_neuregulirovannye_hraneneie_0",
 
 "with_vat": false,
 
@@ -9,15 +9,15 @@
 
 "after_fields": true,
 
-"arr_fields": false,
+"arr_fields": true,
 
-"container_field": "`№ контейнера`",
+"container_field": "`№ КТР`",
 
-"order_id_field": "",
+"order_id_field": "`Номер заказа`",
 
 "esu_id_field": "",
 
-"date_field": "Дата работы",
+"date_field": "`Дата оказания услуги`",
 
 "rks_fields": [
     "--document_reasons_number",
@@ -54,11 +54,11 @@
 ],
 
 "esu_id_columns": [
-    "0.02.03.10", "0.02.03.14", "0.02.03.08", "0.02.03.21"
+    "0.02.03.04"
 ],
 
 "where_conditions": [
-    "date_end >= '2024-07-01'",
+    "date_end >= '2025-07-01'",
     "service_provision_place_location_name='Находка-Восточная, станция'"
 ]
 }

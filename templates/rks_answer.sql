@@ -44,19 +44,27 @@ SELECT DISTINCT
     {% endfor -%}
     {% if esu_id_columns %}
     {% for esu_id in esu_id_columns %}
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_rub_without_vat`, `RKS_CONT.{{ esu_id }}_amount_in_rub_without_vat`) AS `{{ esu_id}}_amount_in_rub_without_vat`,
-	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_contract_currency_without_vat`, `RKS_CONT.{{ esu_id }}_amount_in_contract_currency_without_vat`) AS `{{ esu_id}}_amount_in_contract_currency_without_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_sum_amount_in_rub_without_vat`, `RKS_CONT.{{ esu_id }}_sum_amount_in_rub_without_vat`) AS `{{ esu_id}}_sum_amount_in_rub_without_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_arr_amount_in_rub_without_vat`, `RKS_CONT.{{ esu_id }}_arr_amount_in_rub_without_vat`) AS `{{ esu_id}}_arr_amount_in_rub_without_vat`,    
+	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_sum_amount_in_contract_currency_without_vat`, `RKS_CONT.{{ esu_id }}_sum_amount_in_contract_currency_without_vat`) AS `{{ esu_id}}_sum_amount_in_contract_currency_without_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_arr_amount_in_contract_currency_without_vat`, `RKS_CONT.{{ esu_id }}_arr_amount_in_contract_currency_without_vat`) AS `{{ esu_id}}_arr_amount_in_contract_currency_without_vat`,    
 	{% if with_vat %}
-	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_rub_with_vat`, `RKS_CONT.{{ esu_id }}_amount_in_rub_with_vat`) AS `{{ esu_id}}_amount_in_rub_with_vat`,
-	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_amount_in_contract_currency_with_vat`, `RKS_CONT.{{ esu_id }}_amount_in_contract_currency_with_vat`) AS `{{ esu_id}}_amount_in_contract_currency_with_vat`,
+	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_sum_amount_in_rub_with_vat`, `RKS_CONT.{{ esu_id }}_sum_amount_in_rub_with_vat`) AS `{{ esu_id}}_sum_amount_in_rub_with_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_arr_amount_in_rub_with_vat`, `RKS_CONT.{{ esu_id }}_arr_amount_in_rub_with_vat`) AS `{{ esu_id}}_arr_amount_in_rub_with_vat`,    
+	IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_sum_amount_in_contract_currency_with_vat`, `RKS_CONT.{{ esu_id }}_sum_amount_in_contract_currency_with_vat`) AS `{{ esu_id}}_sum_amount_in_contract_currency_with_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.{{ esu_id }}_arr_amount_in_contract_currency_with_vat`, `RKS_CONT.{{ esu_id }}_arr_amount_in_contract_currency_with_vat`) AS `{{ esu_id}}_arr_amount_in_contract_currency_with_vat`,    
     {% endif %}
     {% endfor -%}
     {% else %}
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_without_vat`, `RKS_CONT.amount_in_rub_without_vat`) AS `amount_in_rub_without_vat`,    
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_without_vat`, `RKS_CONT.amount_in_contract_currency_without_vat`) AS `amount_in_contract_currency_without_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.sum_amount_in_rub_without_vat`, `RKS_CONT.sum_amount_in_rub_without_vat`) AS `sum_amount_in_rub_without_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.arr_amount_in_rub_without_vat`, `RKS_CONT.arr_amount_in_rub_without_vat`) AS `arr_amount_in_rub_without_vat`,    
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.sum_amount_in_contract_currency_without_vat`, `RKS_CONT.sum_mount_in_contract_currency_without_vat`) AS `sum_amount_in_contract_currency_without_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.arr_amount_in_contract_currency_without_vat`, `RKS_CONT.arr_mount_in_contract_currency_without_vat`) AS `arr_amount_in_contract_currency_without_vat`,    
     {% if with_vat %}
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_rub_with_vat`, `RKS_CONT.amount_in_rub_with_vat`) AS `amount_in_rub_with_vat`,
-    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.amount_in_contract_currency_with_vat`, `RKS_CONT.amount_in_contract_currency_with_vat`) AS `amount_in_contract_currency_with_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.sum_amount_in_rub_with_vat`, `RKS_CONT.sum_amount_in_rub_with_vat`) AS `sum_amount_in_rub_with_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.arr_amount_in_rub_with_vat`, `RKS_CONT.arr_amount_in_rub_with_vat`) AS `arr_amount_in_rub_with_vat`,    
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.sum_amount_in_contract_currency_with_vat`, `RKS_CONT.sum_amount_in_contract_currency_with_vat`) AS `sum_amount_in_contract_currency_with_vat`,
+    IF(`RKS_EQ.service_details_order_id`<>'', `RKS_EQ.arr_amount_in_contract_currency_with_vat`, `RKS_CONT.arr_amount_in_contract_currency_with_vat`) AS `arr_amount_in_contract_currency_with_vat`,    
     {% endif %}
     {% endif %}
     {# #}
