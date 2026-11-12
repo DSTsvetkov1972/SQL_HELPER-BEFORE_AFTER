@@ -37,21 +37,36 @@ SELECT
     {% if esu_id_columns %}
         {% for esu_id in esu_id_columns %}
     RKS.`{{ esu_id }}_sum_amount_in_rub_without_vat`,
-    RKS.`{{ esu_id }}_sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat or not loop.last %},
-    {% endif %}
+            {% if arr_fields %}
+    RKS.`{{ esu_id }}_arr_amount_in_rub_without_vat`,    
+            {% endif %}
+    RKS.`{{ esu_id }}_sum_amount_in_contract_currency_without_vat`{% if not arr_fields or date_field or with_vat or not loop.last %},{% endif %}
+            {% if arr_fields %}            
+    RKS.`{{ esu_id }}_arr_amount_in_contract_currency_without_vat`{% if date_field or with_vat or not loop.last %},{% endif %}
+            {% endif %}   
             {% if with_vat %}
     RKS.`{{ esu_id }}_sum_amount_in_rub_with_vat`,
-    RKS.`{{ esu_id }}_sum_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
+                {% if arr_fields %}
+    RKS.`{{ esu_id }}_arr_amount_in_rub_with_vat`,
+                {% endif %}
+    RKS.`{{ esu_id }}_sum_amount_in_contract_currency_with_vat`{% if date_field or arr_fields %},{% endif %}
+                {% if arr_fields %}    
+    RKS.`{{ esu_id }}_arr_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}    
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% else %}
     RKS.`sum_amount_in_rub_without_vat`,
-    RKS.`sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},
-    {% endif %}
-    {% if with_vat %}
+    RKS.`sum_amount_in_contract_currency_without_vat`{% if date_field or with_vat %},{% endif %}
+        {% if with_vat %}
     RKS.`sum_amount_in_rub_with_vat`,
-    RKS.`sum_amount_in_contract_currency_with_vat`{% if date_field %},
-    {% endif %}
+            {% if arr_fields %}    
+    RKS.`arr_amount_in_rub_with_vat`,
+            {% endif %}
+    RKS.`sum_amount_in_contract_currency_with_vat`{% if date_field or arr_fields %},{% endif %}
+            {% if arr_fields %}      
+    RKS.`arr_amount_in_contract_currency_with_vat`{% if date_field %},{% endif %}
+            {% endif %}
         {% endif %}
     {% endif %}
 {% endif %}

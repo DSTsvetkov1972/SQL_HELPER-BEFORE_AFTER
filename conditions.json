@@ -3,7 +3,7 @@
 
 "svod_table_name": "audit.dvst_neuregulirovannye_hraneneie_0",
 
-"with_vat": false,
+"with_vat": true,
 
 "before_fields": true,
 
